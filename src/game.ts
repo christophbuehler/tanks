@@ -2,25 +2,31 @@ import { Landscape } from './landscape';
 import { LargeBombMissile } from './missiles/large-bomb-missile';
 import { Missile } from './missiles/missile';
 import { V2 } from './v2';
+import { Player } from './player';
 
 export class Game {
     private canvas: HTMLCanvasElement;
     private ctx: CanvasRenderingContext2D;
     private landscape: Landscape;
     private missiles: Missile[] = [];
+    private players: Player[];
 
     constructor() {
         this.canvas = <HTMLCanvasElement>document.getElementById('canvas');
         this.ctx = this.canvas.getContext('2d');
         this.adjustSize();
+        this.players = [
+            new Player('red', 40, this.landscape),
+            new Player('blue', 200, this.landscape)
+        ];
         this.paint();
         this.update();
 
-        do {
+        // do {
             this.launch(new LargeBombMissile(
                 new V2(Math.random() * 400, Math.random() * 140 + 200),
                 new V2(Math.random() * 4, Math.random() * 4)));
-        } while(Math.random() < .8);
+        // } while(Math.random() < .8);
     }
 
     launch(missile: Missile): void {
@@ -35,6 +41,7 @@ export class Game {
     private paint(): void {
         this.landscape.paint(this.ctx);
         this.missiles.forEach(m => m.paint(this.ctx));
+        this.players.forEach(p => p.paint(this.ctx));
         window.requestAnimationFrame(this.paint.bind(this));
     }
 

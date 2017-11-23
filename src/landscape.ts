@@ -38,24 +38,26 @@ export class Landscape {
         ctx.fill();
         ctx.strokeStyle = '#558B2F';
         ctx.lineWidth = 2;
-        ctx.stroke();
+        // ctx.stroke();
         ctx.closePath();
     }
 
-    collide({ pos, radius, power }: Missile): boolean {
+    collide({ pos, power }: Missile): boolean {
         const yVal: number = this.yValue(pos.x);
         if (yVal < pos.y) return false;
         this.vertices
             .forEach(v => {
                 const dist = Math.abs(v[0] - pos.x);
-                if (dist > radius * 10) return;
+                if (dist > power * 10) return;
                 const step = 4;
-                v[1] -= ~~(((power - dist) * (power - dist) * .01) / step) * step;
+                const f = power * 10 - dist;
+                const rndForce = Math.random() * .2 + .8;
+                v[1] -= ~~((f * power * .2 * rndForce) / step) * step;
             });
         return true;
     }
 
-    private yValue(x: number): number {
+    yValue(x: number): number {
         let leftVal: number = 0;
         let rightVal: number;
 
@@ -63,7 +65,7 @@ export class Landscape {
             if (vertice[0] <= x) current.left = vertice;
             if (vertice[0] >= x) current.right = vertice;
             return current;
-        }, {left: 0, right: 4});
+        }, {left: void 0, right: void 0});
 
         if (left[1] === right[1]) return left[1];
 

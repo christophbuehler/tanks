@@ -6,6 +6,6 @@ export class LargeBombMissile extends Missile {
         pos: V2,
         vel: V2
     ) {
-        super(pos, vel, 200, 4, '#f20000');
+        super(pos, vel, 5, 2, '#000');
     }
 }

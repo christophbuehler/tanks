@@ -1,4 +1,4 @@
-import { Landscape } from './landscape';
+import { Landscape } from '../landscape';
 import { V2 } from '../v2';
 
 export class Missile {
@@ -14,7 +14,7 @@ export class Missile {
     ) { }
 
     paint(ctx: CanvasRenderingContext2D): void {
-        if (this.collided) return false;
+        if (this.collided) return;
         ctx.beginPath();
         ctx.arc(this.pos.x, this.pos.y, this.radius, 0, Math.PI * 2);
         ctx.fillStyle = this.color || '#000';
@@ -24,7 +24,7 @@ export class Missile {
 
     update(landscape: Landscape): void {
         if (this.collided) return;
-        if (landscape.collide(this.pos, this.vel, this.power)) {
+        if (landscape.collide(this)) {
             this.collided = true;
             return;
         }
