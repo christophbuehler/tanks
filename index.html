@@ -5,14 +5,89 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width">
-    <title>Document</title>
+    <link rel="manifest" href="manifest.json">
+    <link href="https://fonts.googleapis.com/css?family=Diplomata+SC|Roboto" rel="stylesheet">
+    <title>Tanks</title>
     <style>
-    body { margin: 0; padding: 0; }
-    #canvas { display: block; width: 100vw; height: 100vh; background: linear-gradient(#E3F2FD, #BBDEFB); }
+    body {
+        background: #111;
+        margin: 0;
+        padding: 0;
+        font-family: 'Roboto';
+    }
+    canvas {
+        display: block;
+        width: 100vw;
+        height: 100vh;
+        background: linear-gradient(#E3F2FD, #BBDEFB);
+    }
+    #menu {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        background-size: cover;
+        background-image: url('assets/army-texture.jpg');
+        color: #fff;
+        text-align: center;
+        display: none;
+    }
+    .overlay {
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, .6);
+        color: #fff;
+        box-sizing: border-box;
+        padding: 16px;
+    }
+    #menu h1 {
+        text-align: center;
+        margin: 0;
+        padding: 0 0 24px;
+        font-size: 20pt;
+        line-height: 48px;
+        height: 48px;
+        letter-spacing: 2px;
+        font-family: 'Diplomata SC';
+    }
+    #menu .btn {
+        display: inline-block;
+        padding: 0 16px;
+        border: 2px solid rgba(0, 0, 0, 1);
+        background: rgba(60, 48, 0, 1);
+        line-height: 42px;
+        color: #fff;
+        text-transform: uppercase;
+        height: 42px;
+        letter-spacing: 1px;
+        width: 220px;
+        box-sizing: border-box;
+    }
+    #menu section {
+        display: none;
+    }
+    #menu input {
+        display: inline-block;
+        background: rgba(255, 255, 255, .8);
+        border: 2px solid rgba(0, 0, 0, 1);
+        height: 42px;
+        line-height: 42px;
+        text-align: center;
+        font-size: 16pt;
+        color: rgba(0, 0, 0, .8);
+        width: 220px;
+        margin-bottom: 16px;
+        box-sizing: border-box;
+    }
     </style>
+    <script
+        defer
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
     <script defer src="dist/main.js"></script>
 </head>
 <body>
-    <canvas id="canvas"></canvas>
 </body>
 </html>

@@ -1,3 +1,6 @@
 import { Game } from './game';
+import { Ui } from './ui';
 
-new Game();
+window.onload = function() {
+    new Ui();
+}

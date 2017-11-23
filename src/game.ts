@@ -5,28 +5,26 @@ import { V2 } from './v2';
 import { Player } from './player';
 
 export class Game {
-    private canvas: HTMLCanvasElement;
     private ctx: CanvasRenderingContext2D;
     private landscape: Landscape;
     private missiles: Missile[] = [];
-    private players: Player[];
+    private players: Player[] = [];
 
-    constructor() {
-        this.canvas = <HTMLCanvasElement>document.getElementById('canvas');
+    constructor(
+        private canvas: HTMLCanvasElement
+    ) {
         this.ctx = this.canvas.getContext('2d');
         this.adjustSize();
-        this.players = [
-            new Player('red', 40, this.landscape),
-            new Player('blue', 200, this.landscape)
-        ];
+
         this.paint();
         this.update();
+    }
 
-        // do {
-            this.launch(new LargeBombMissile(
-                new V2(Math.random() * 400, Math.random() * 140 + 200),
-                new V2(Math.random() * 4, Math.random() * 4)));
-        // } while(Math.random() < .8);
+    start() {
+        this.players = [
+            new Player('red', 40, this.landscape, this),
+            new Player('blue', 200, this.landscape, this)
+        ];
     }
 
     launch(missile: Missile): void {
@@ -35,6 +33,7 @@ export class Game {
 
     private update(): void {
         this.missiles.forEach(m => m.update(this.landscape));
+        this.players.forEach(p => p.update());
         setTimeout(this.update.bind(this), 20);
     }
 

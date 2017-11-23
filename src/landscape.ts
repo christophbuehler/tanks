@@ -38,7 +38,7 @@ export class Landscape {
         ctx.fill();
         ctx.strokeStyle = '#558B2F';
         ctx.lineWidth = 2;
-        // ctx.stroke();
+        ctx.stroke();
         ctx.closePath();
     }
 
@@ -67,6 +67,7 @@ export class Landscape {
             return current;
         }, {left: void 0, right: void 0});
 
+        if (right === void 0) return left[1];
         if (left[1] === right[1]) return left[1];
 
         const k = (right[1] - left[1]) / (right[0] - left[0]);
