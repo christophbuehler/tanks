@@ -7,10 +7,10 @@ export class Landscape {
     private vertices: number[][];
     private resolution: number = 4;
     private hills: number = 8;
-    private minHeight: number = 80;
-    private maxHeight: number = 280;
+    private minHeight: number = 40;
+    private maxHeight: number = 240;
     private minHillDist: number = 40;
-    private maxHillDist: number = 320;
+    private maxHillDist: number = 180;
     private dim: V2;
     private rndGen: any;
 
@@ -60,11 +60,12 @@ export class Landscape {
 
         const { left, right } = this.vertices.reduce((current, vertice) => {
             if (vertice[0] <= x) current.left = vertice;
-            if (vertice[0] >= x) current.right = vertice;
+            if (vertice[0] >= x && current.right === void 0) current.right = vertice;
             return current;
         }, {left: void 0, right: void 0});
 
         if (right === void 0) return left[1];
+        if (left === void 0) return right[1];
         if (left[1] === right[1]) return left[1];
 
         const k = (right[1] - left[1]) / (right[0] - left[0]);

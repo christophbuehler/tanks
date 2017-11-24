@@ -1,5 +1,6 @@
 import { Game } from "./game";
 import { V2 } from "./v2";
+import { Observable } from "rxjs/Observable";
 
 declare const $;
 
@@ -48,12 +49,15 @@ export class Ui {
         </div>`);
 
     constructor() {
-        this.setupListeners();
         $('body').append(this.ingameControls);
         $('body').append(this.el);
+        const canvas = $('<canvas></canvas>');
+        $('body').append(canvas);
+        this.game = new Game(canvas[0]);
         setTimeout(() => {
             this.el.fadeIn(800, () => this.navigate('fullscreen'))
         }, 800);
+        this.setupListeners();
     }
 
     setupListeners() {
@@ -129,26 +133,30 @@ export class Ui {
     }
 
     sliderControls() {
-        let slider = void 0;
-        this.ingameControls.on('touchstart', '.slider', function() {
-            slider = this;
-        });
-        this.ingameControls.on('touchmove', '.slider', function(ev) {
-            const touch = ev.touches[0];
-            if (slider !== this) return false;
-            const start = slider.offsetLeft;
-            const totalWidth = slider.clientWidth;
-            let newWidth = touch.clientX - start;
-            newWidth = Math.max(newWidth, 0);
-            const widthInPercent = Math.min((100 / totalWidth) * newWidth, 100);
-            $(slider).find('.indicator').css('width', `${~~((widthInPercent + 5) / 10) * 10}%`);
-        });
+        const slider = this.ingameControls.find('.slider')[0];
+        this.game.playerChange
+            .subscribe(player => adjustSlider(player.force));
+
+        let sliding = false;
+        Observable.fromEvent<TouchEvent>(slider, 'touchmove')
+            .subscribe(ev => {
+                const touch = ev.touches[0];
+                const start = slider.offsetLeft;
+                const totalWidth = slider.clientWidth;
+                let newWidth = Math.max(touch.clientX - start, 0);
+                const widthInPercent = Math.min((100 / totalWidth) * newWidth, 100);
+                const force = ~~((widthInPercent + 5) / 10);
+                this.game.currentPlayer.force = force;
+                adjustSlider(force);
+            });
+
+        const indicator = this.ingameControls.find('.indicator');
+        function adjustSlider(force) {
+            indicator.css('width', `${force * 10}%`);
+        }
     }
 
     loadGame() {
-        const canvas = $('<canvas></canvas>');
-        $('body').append(canvas);
-        this.game = new Game(canvas[0]);
         this.el.fadeOut(800, () => this.game.start());
     }
 

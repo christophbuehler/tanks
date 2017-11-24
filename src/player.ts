@@ -13,6 +13,7 @@ export class Player {
     private vehicleRotation: number;
     private bezelRotation: number = 1;
     private height = 4;
+    private bezelLength = 14;
 
     constructor(
         private color: string,
@@ -37,7 +38,7 @@ export class Player {
         const rotation = this.vehicleRotation + this.bezelRotation;
         const vel = new V2(Math.cos(rotation) * this.force, Math.sin(rotation) * this.force);
         this.game.launch(new LargeBombMissile(
-            new V2(this.pos.x, this.pos.y + 7).add(vel).add(vel),
+            this.pos.add(new V2(Math.cos(rotation) * this.bezelLength, Math.sin(rotation) * this.bezelLength + 7)),
             vel));
         this.game.switchPlayer();
     }
@@ -48,17 +49,16 @@ export class Player {
         ctx.rotate(this.vehicleRotation);
 
         // bezel
-        const bezelLength = 14;
         ctx.beginPath();
         ctx.moveTo(0, 7);
-        ctx.lineTo(Math.cos(this.bezelRotation) * bezelLength, Math.sin(this.bezelRotation) * bezelLength + 7);
+        ctx.lineTo(Math.cos(this.bezelRotation) * this.bezelLength, Math.sin(this.bezelRotation) * this.bezelLength + 7);
         ctx.closePath();
         ctx.lineWidth = 2;
         ctx.strokeStyle = '#000800';
         ctx.stroke();
         ctx.beginPath();
-        ctx.moveTo(Math.cos(this.bezelRotation) * (bezelLength - 2), Math.sin(this.bezelRotation) * (bezelLength - 2) + 7);
-        ctx.lineTo(Math.cos(this.bezelRotation) * bezelLength, Math.sin(this.bezelRotation) * bezelLength + 7);
+        ctx.moveTo(Math.cos(this.bezelRotation) * (this.bezelLength - 2), Math.sin(this.bezelRotation) * (this.bezelLength - 2) + 7);
+        ctx.lineTo(Math.cos(this.bezelRotation) * this.bezelLength, Math.sin(this.bezelRotation) * this.bezelLength + 7);
         ctx.closePath();
         ctx.lineWidth = 2.5;
         ctx.strokeStyle = '#001000';

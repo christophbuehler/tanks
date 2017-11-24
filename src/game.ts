@@ -3,8 +3,12 @@ import { LargeBombMissile } from './missiles/large-bomb-missile';
 import { Missile } from './missiles/missile';
 import { V2 } from './v2';
 import { Player } from './player';
+import { Observable, Subject } from 'rxjs/Rx';
 
 export class Game {
+    public playerChange: Observable<Player>;
+
+    private playerChangeSubject: Subject<Player>;
     private ctx: CanvasRenderingContext2D;
     private landscape: Landscape;
     private missiles: Missile[] = [];
@@ -15,25 +19,27 @@ export class Game {
     constructor(
         private canvas: HTMLCanvasElement
     ) {
+        this.playerChangeSubject = new Subject<Player>();
+        this.playerChange = this.playerChangeSubject.asObservable();
         this.ctx = this.canvas.getContext('2d');
-        this.adjustSize();
-
-        this.paint();
-        this.update();
     }
 
     switchPlayer() {
         this.currentPlayer = this.currentPlayer === this.players[0]
             ? this.players[1]
             : this.players[0];
+        this.playerChangeSubject.next(this.currentPlayer);
     }
 
     start() {
+        this.adjustSize();
         this.players = [
             new Player('#000', 40, this.landscape, this),
             new Player('blue', 200, this.landscape, this)
         ];
-        this.currentPlayer = this.players[0];
+        this.switchPlayer();
+        this.paint();
+        this.update();
     }
 
     launch(missile: Missile): void {
