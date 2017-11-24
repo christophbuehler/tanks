@@ -34,11 +34,8 @@ export class Landscape {
                 ctx.lineTo(v[0], v[1]);
             }
         });
-        ctx.fillStyle = '#8BC34A';
+        ctx.fillStyle = '#fff';
         ctx.fill();
-        ctx.strokeStyle = '#558B2F';
-        ctx.lineWidth = 2;
-        ctx.stroke();
         ctx.closePath();
     }
 

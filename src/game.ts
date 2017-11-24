@@ -9,6 +9,8 @@ export class Game {
     private landscape: Landscape;
     private missiles: Missile[] = [];
     private players: Player[] = [];
+    
+    currentPlayer: Player;
 
     constructor(
         private canvas: HTMLCanvasElement
@@ -20,11 +22,18 @@ export class Game {
         this.update();
     }
 
+    switchPlayer() {
+        this.currentPlayer = this.currentPlayer === this.players[0]
+            ? this.players[1]
+            : this.players[0];
+    }
+
     start() {
         this.players = [
-            new Player('red', 40, this.landscape, this),
+            new Player('#000', 40, this.landscape, this),
             new Player('blue', 200, this.landscape, this)
         ];
+        this.currentPlayer = this.players[0];
     }
 
     launch(missile: Missile): void {
