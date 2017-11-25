@@ -7,6 +7,6 @@ export class SmallMissile extends Missile {
         pos: V2,
         vel: V2
     ) {
-        super(pos, vel, 2, 1, '#f20000');
+        super(pos, vel, 3, 1, '#f20000');
     }
 }
