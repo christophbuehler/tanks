@@ -34,7 +34,7 @@ export class Landscape {
                 ctx.lineTo(v[0], v[1]);
             }
         });
-        ctx.fillStyle = '#fff';
+        ctx.fillStyle = '#00aa44';
         ctx.fill();
         ctx.closePath();
     }
