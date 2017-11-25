@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width">
     <link rel="manifest" href="manifest.json">
-    <link href="https://fonts.googleapis.com/css?family=Diplomata+SC|Roboto" rel="stylesheet">
-    <title>Tanks</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <title>Arms Race</title>
     <style>
     * {
         user-select: none;
@@ -17,14 +17,15 @@
         -webkit-user-select: none;
     }
     body {
-        background-image: url('assets/stars.jpg');
+        /* background-image: url('assets/stars.jpg'); */
+        background: #44a2ff;
         margin: 0;
         padding: 0;
         font-family: 'Roboto';
     }
     canvas {
         display: block;
-        width: 100vw;
+        flex-grow: 1;
         height: 100vh;
         background: linear-gradient(#E3F2FDc2, #7cccff33);
     }
@@ -35,18 +36,9 @@
         width: 100vw;
         height: 100vh;
         background-size: cover;
-        background-image: url('assets/army-texture.jpg');
-        color: #fff;
+        color: rgba(0, 0, 0, .8);
         text-align: center;
-        display: none;
-    }
-    .overlay {
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, .6);
-        color: #fff;
-        box-sizing: border-box;
-        padding: 16px;
+        background: #fff;
     }
     #menu h1 {
         text-align: center;
@@ -56,13 +48,12 @@
         line-height: 48px;
         height: 48px;
         letter-spacing: 2px;
-        font-family: 'Diplomata SC';
+        color: #311B92;
     }
     #menu .btn {
         display: inline-block;
         padding: 0 16px;
-        border: 2px solid rgba(0, 0, 0, 1);
-        background: rgba(60, 48, 0, 1);
+        border: 1px solid rgba(0, 0, 0, .1);
         line-height: 42px;
         color: #fff;
         text-transform: uppercase;
@@ -87,30 +78,16 @@
         margin-bottom: 16px;
         box-sizing: border-box;
     }
-    .ingame-controls {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100vw;
-        height: 100vh;
-        white-space: nowrap;
-        font-size: 0;
-        display: flex;
+    #ingame-controls .left, #ingame-controls .right {
         box-sizing: border-box;
-        padding: 4px;
-    }
-    .ingame-controls .left, .ingame-controls .right {
-        box-sizing: border-box;
-        display: flex;
         height: 100%;
         width: 20%;
-        flex-direction: column;
     }
-    .ingame-controls .rot.active:after, .ingame-controls .mov.active:after {
+    #ingame-controls .rot.active:after, #ingame-controls .mov.active:after {
         transform: scale(.8);
         border-width: 2px;
     }
-    .ingame-controls .rot:after, .ingame-controls .mov:after {
+    #ingame-controls .rot:after, #ingame-controls .mov:after {
         content: ' ';
         transform: scale(.9);
         box-sizing: border-box;
@@ -122,21 +99,20 @@
         height: 100%;
         border: 1px solid #fff;
     }
-    .ingame-controls .mov:after {
+    #ingame-controls .mov:after {
         border-color: #000;
     }
-    .ingame-controls .rot {
+    #ingame-controls .rot {
         position: relative;
         background-size: auto 22px;
         background-image: url('assets/arrow-left-rot.png');
         background-repeat: no-repeat;
         background-position: center;
-        height: 10%;
     }
-    .ingame-controls .right .rot {
+    #ingame-controls .right .rot {
         background-image: url('assets/arrow-right-rot.png');
     }
-    .ingame-controls .mov {
+    #ingame-controls .mov {
         position: relative;
         background-size: auto 22px;
         background-image: url('assets/arrow-left.png');
@@ -144,15 +120,15 @@
         background-position: center;
         height: 10%;
     }
-    .ingame-controls .right .mov {
+    #ingame-controls .right .mov {
         background-image: url('assets/arrow-right.png');
     }
-    .ingame-controls .power {
+    #ingame-controls .power {
         width: 60%;
         display: flex;
         flex-direction: column;
     }
-    .ingame-controls .space {
+    #ingame-controls .space {
         flex-grow: 1;
     }
     .power .fire-btn {
@@ -169,17 +145,90 @@
         color: rgba(220, 0, 0, .6);
     }
     .slider {
-        margin-top: 16px;
-        height: 10%;
-        border-radius: 4px;
-        overflow: hidden;
-        background: rgba(255, 255, 255, .4);
+        width: 32px;
+        height: 120px;
+        flex-grow: 1;
+        margin: 16px 0;
+        padding: 0 52px;
     }
-    .slider div {
-        transition: width .2s ease;
-        width: 20%;
-        background: linear-gradient(to right, #ffaa11, #ffff11);
+    .slider .shape {
+        width: 32px;
+        overflow: hidden;
         height: 100%;
+        clip-path: polygon(0 0, 100% 0, 50% 100%, 0 0);
+        background: rgba(0, 0, 0, .1);
+        position: relative;
+    }
+    .slider .indicator {
+        transition: width .2s ease;
+        width: 100%;
+        background: linear-gradient(#ffaa11, #ffff11);
+        position: absolute;
+        bottom: 0;
+    }
+    #ingame-controls {
+        font-size: 0;
+        position: relative;
+        white-space: nowrap;
+        height: 100%;
+        background: #fff;
+        padding: 32px 8px;
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        box-shadow: 0 -1px 2px rgba(0,0,0,.4);
+    }
+    .ingame-btn.small {
+        width: 48px;
+    }
+    .ingame-btn {
+        width: 120px;
+        height: 32px;
+        position: relative;
+        background-size: auto 22px;
+        background-repeat: no-repeat;
+        background-position: center;
+        font-size: 12pt;
+        text-align: center;
+        line-height: 32px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+    .grow {
+        flex-grow: 1;
+    }
+    .ingame-btn:after {
+        content: ' ';
+        box-sizing: border-box;
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        border: 1px solid #000;
+    }
+    .ingame-btn.active:after {
+        transform: scale(.8);
+        border-width: 2px;
+    }
+    .flex {
+        display: flex;
+    }
+    .num {
+        display: inline-block;
+        width: 40px;
+        text-align: center;
+        font-size: 10pt;
+        line-height: 32px;
+    }
+    .top-space {
+        margin-top: 4px;
+    }
+    .ingame {
+        display: flex;
+        height: 100vh;
+        width: 100vw;
     }
     </style>
     <script
@@ -190,5 +239,44 @@
     <script defer src="dist/main.js"></script>
 </head>
 <body>
+    <div class="ingame">
+        <canvas id="canvas"></canvas>
+        <div id="ingame-controls">
+            <div class="flex">
+                <div class="ingame-btn grow">MISSILE</div>
+            </div>
+            <div class="slider">
+                <div class="shape">
+                    <div class="indicator"></div>
+                </div>
+            </div>
+            <div><div class="flex">
+                <div class="ingame-btn small left-rot" style="background-image: url('assets/arrow-left-rot.png');"></div>
+                <span class="num grow">36</span>
+                <div class="ingame-btn small right-rot" style="background-image: url('assets/arrow-right-rot.png');"></div>
+            </div><div class="flex top-space">
+                <div class="ingame-btn small left-mov" style="background-image: url('assets/arrow-left.png');"></div>
+                <span class="num grow">120</span>
+                <div class="ingame-btn small right-mov" style="background-image: url('assets/arrow-right.png');"></div>
+            </div></div>
+            <div class="flex">
+                <div class="ingame-btn top-space fire-btn grow">FIRE</div>
+            </div>
+        </div>
+    </div>
+    <div id="menu">
+        <h1>Arms Race</h1>
+        <section name="fullscreen">
+            <button class="btn fullscreen-btn">Play in Fullscreen</button>
+        </section>
+        <section name="choose-player1">
+            <input type="text" id="player1-name" placeholder="Player 1 Name"><br>
+            <button class="btn toplayer2-btn">Set Player 2</button>
+        </section>
+        <section name="choose-player2">
+            <input type="text" id="player1-name" placeholder="Player 2 Name"><br>
+            <button class="btn start-btn">Start Game!</button>
+        </section>
+    </div>
 </body>
 </html>

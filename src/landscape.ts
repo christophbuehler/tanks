@@ -7,10 +7,10 @@ export class Landscape {
     private vertices: number[][];
     private resolution: number = 4;
     private hills: number = 8;
-    private minHeight: number = 40;
-    private maxHeight: number = 240;
+    private minHeight: number = 60;
+    private maxHeight: number = 260;
     private minHillDist: number = 40;
-    private maxHillDist: number = 180;
+    private maxHillDist: number = 100;
     private dim: V2;
     private rndGen: any;
 

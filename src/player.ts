@@ -2,12 +2,13 @@ import { V2 } from "./v2";
 import { Landscape } from "./landscape";
 import { Game } from "./game";
 import { LargeBombMissile } from "./missiles/large-bomb-missile";
+import { SpreadMissile } from "./missiles/spread-missile";
 
 export class Player {
     public dim: V2 = new V2(21, 40);
     public pos: V2;
     public vel: V2 = new V2(0, 0);
-    public force = 8;
+    public force = 5;
     public rotVel: number = 0;
 
     private vehicleRotation: number;
@@ -36,10 +37,14 @@ export class Player {
 
     launch() {
         const rotation = this.vehicleRotation + this.bezelRotation;
-        const vel = new V2(Math.cos(rotation) * this.force, Math.sin(rotation) * this.force);
-        this.game.launch(new LargeBombMissile(
-            this.pos.add(new V2(Math.cos(rotation) * this.bezelLength, Math.sin(rotation) * this.bezelLength + 7)),
-            vel));
+        const force = this.force * .8;
+        const vel = new V2(Math.cos(rotation) * force, Math.sin(rotation) * force);
+        const verticalVehicleRotation = this.vehicleRotation + Math.PI / 2;
+        this.game.launch(new SpreadMissile(
+            this.pos
+                .add(new V2(Math.cos(verticalVehicleRotation) * 7, Math.sin(verticalVehicleRotation) * 7))
+                .add(new V2(Math.cos(rotation) * this.bezelLength, Math.sin(rotation) * this.bezelLength)),
+            vel, this.game));
         this.game.switchPlayer();
     }
 

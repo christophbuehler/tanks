@@ -35,7 +35,7 @@ export class Game {
         this.adjustSize();
         this.players = [
             new Player('#000', 40, this.landscape, this),
-            new Player('blue', 200, this.landscape, this)
+            new Player('blue', 400, this.landscape, this)
         ];
         this.switchPlayer();
         this.paint();
