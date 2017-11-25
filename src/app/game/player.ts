@@ -3,13 +3,21 @@ import { Landscape } from "./landscape";
 import { Game } from "./game";
 import { LargeBombMissile } from "./missiles/large-bomb-missile";
 import { SpreadMissile } from "./missiles/spread-missile";
+import { SmallMissile } from './missiles/small-missile';
 
 export class Player {
-    public dim: V2 = new V2(21, 40);
-    public pos: V2;
-    public vel: V2 = new V2(0, 0);
-    public force = 5;
-    public rotVel: number = 0;
+    dim: V2 = new V2(21, 40);
+    pos: V2;
+    vel: V2 = new V2(0, 0);
+    force = 5;
+    rotVel: number = 0;
+    missiles: {title, count, create}[] = [
+        {
+            title: 'test missile',
+            count: 99,
+            create: (pos, vel) => new SmallMissile(pos, vel)
+        }
+    ]
 
     private vehicleRotation: number;
     private bezelRotation: number = 1;

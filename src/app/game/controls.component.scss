@@ -1,0 +1,55 @@
+:host {
+  font-size: 0;
+  position: relative;
+  white-space: nowrap;
+  height: 100%;
+  background: url('https://i.pinimg.com/originals/40/f3/fc/40f3fc555a545028ba354c5efcb65c63.jpg');
+  padding: 32px 8px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+
+  .space {
+    flex-grow: 1;
+  }
+
+  .ingame-btn {
+    color: #fff;
+    width: 120px;
+    height: 32px;
+    position: relative;
+    background-size: auto 22px;
+    background-repeat: no-repeat;
+    background-position: center;
+    font-size: 12pt;
+    text-align: center;
+    line-height: 32px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+
+    &.small {
+      width: 48px;
+    }
+  }
+
+  .grow {
+    flex-grow: 1;
+  }
+
+  .flex {
+      display: flex;
+  }
+
+  .num {
+      display: inline-block;
+      width: 40px;
+      text-align: center;
+      font-size: 10pt;
+      line-height: 32px;
+      color: #fff;
+  }
+
+  .top-space {
+      margin-top: 4px;
+  }
+}

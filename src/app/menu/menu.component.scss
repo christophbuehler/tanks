@@ -1,0 +1,49 @@
+:host {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  color: rgba(0, 0, 0, .8);
+  text-align: center;
+  background: #fff;
+
+  h1 {
+    text-align: center;
+    margin: 0;
+    padding: 0 0 24px;
+    font-size: 20pt;
+    line-height: 48px;
+    height: 48px;
+    letter-spacing: 2px;
+    color: #311B92;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0 16px;
+    border: 1px solid rgba(0, 0, 0, .1);
+    line-height: 42px;
+    color: #fff;
+    text-transform: uppercase;
+    height: 42px;
+    letter-spacing: 1px;
+    width: 220px;
+    box-sizing: border-box;
+  }
+
+  input {
+    display: inline-block;
+    background: rgba(255, 255, 255, .8);
+    border: 2px solid rgba(0, 0, 0, 1);
+    height: 42px;
+    line-height: 42px;
+    text-align: center;
+    font-size: 16pt;
+    color: rgba(0, 0, 0, .8);
+    width: 220px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+  }
+}
