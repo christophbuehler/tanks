@@ -17,6 +17,15 @@ export class ControlsComponent implements OnInit {
   ngOnInit() {
   }
 
+  toInt(num) {
+    return ~~num;
+  }
+
+  switchMissile() {
+    const player = this.game.currentPlayer;
+    player.activeMissileIndex = (++player.activeMissileIndex) % player.missiles.length;
+  }
+
   move(left: boolean, stop: boolean): void {
     this.game.currentPlayer.vel = new V2(stop
       ? 0

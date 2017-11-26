@@ -16,6 +16,8 @@ export class SliderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.game.playerChange
+      .subscribe(p => this.height = p.force * 10);
   }
 
   change(ev) {

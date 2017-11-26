@@ -4,11 +4,11 @@ import { Game } from '../game';
 import { SmallMissile } from './small-missile';
 
 export class LargeBombMissile extends Missile {
-  constructor(
-    pos: V2,
-    vel: V2,
-    private game: Game
-  ) {
+  constructor({
+    pos,
+    vel,
+    game
+  }) {
     super(pos, vel, 3, 2, '#000');
 
     this.collision

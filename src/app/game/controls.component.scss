@@ -3,16 +3,40 @@
   position: relative;
   white-space: nowrap;
   height: 100%;
-  background: url('https://i.pinimg.com/originals/40/f3/fc/40f3fc555a545028ba354c5efcb65c63.jpg');
+  background: #000;
+  // background: url('https://i.pinimg.com/originals/40/f3/fc/40f3fc555a545028ba354c5efcb65c63.jpg');
   padding: 32px 8px;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-
+  .missiles {
+    overflow: hidden;
+    white-space: nowrap;
+    height: 32px;
+    width: 100%;
+    position: relative;
+    .inner {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      transition: transform .1s ease;
+      .missile {
+        display: inline-block;
+        color: #fff;
+        line-height: 32px;
+        height: 32px;
+        font-size: 10pt;
+        padding: 0 16px;
+        box-sizing: border-box;
+        width: 100%;
+      }
+    }
+  }
   .space {
     flex-grow: 1;
   }
-
   .ingame-btn {
     color: #fff;
     width: 120px;
@@ -26,30 +50,25 @@
     line-height: 32px;
     letter-spacing: 1px;
     text-transform: uppercase;
-
     &.small {
       width: 48px;
     }
   }
-
   .grow {
     flex-grow: 1;
   }
-
   .flex {
-      display: flex;
+    display: flex;
   }
-
   .num {
-      display: inline-block;
-      width: 40px;
-      text-align: center;
-      font-size: 10pt;
-      line-height: 32px;
-      color: #fff;
+    display: inline-block;
+    width: 40px;
+    text-align: center;
+    font-size: 10pt;
+    line-height: 32px;
+    color: #fff;
   }
-
   .top-space {
-      margin-top: 4px;
+    margin-top: 4px;
   }
 }

@@ -3,10 +3,10 @@ import { V2 } from '../v2';
 import { Game } from '../game';
 
 export class SmallMissile extends Missile {
-  constructor(
-    pos: V2,
-    vel: V2
-  ) {
+  constructor({
+    pos,
+    vel
+  }) {
     super(pos, vel, 3, 1, '#f20000');
   }
 }

@@ -5,10 +5,12 @@ import { Subject } from 'rxjs/Subject';
 import { Landscape } from './landscape';
 import { Missile } from './missiles/missile';
 import { V2 } from './v2';
+import { AudioManager } from './audio-manager';
 
 export class Game {
   playerChange: Observable<Player>;
   currentPlayer: Player;
+  audio: AudioManager;
 
   private playerChangeSubject: Subject<Player>;
   private ctx: CanvasRenderingContext2D;
@@ -23,9 +25,10 @@ export class Game {
     this.playerChangeSubject = new Subject<Player>();
     this.playerChange = this.playerChangeSubject.asObservable();
     this.ctx = this.canvas.getContext('2d');
+    this.audio = new AudioManager();
 
     this.bg = document.createElement('img');
-    this.bg.src = 'https://staticdelivery.nexusmods.com/mods/110/images/30164-1-1358619554.jpg';
+    this.bg.src = 'https://i.pinimg.com/736x/f4/85/99/f48599bcbe27682a0f98a2d9838adf40--texture-snow.jpg';
     this.bg.onload = () => this.start();
   }
 

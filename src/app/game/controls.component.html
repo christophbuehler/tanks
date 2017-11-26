@@ -1,19 +1,26 @@
-<div class="flex">
-  <div class="ingame-btn grow">RED RAIN</div>
+<div class="missiles">
+  {{ game.currentPlayer.activeMissileIndex }}
+  <div [style.transform]="'translate(' + (-game.currentPlayer.activeMissileIndex * 100) + '%, 0)'"
+    (touchstart)="switchMissile()" class="inner">
+    <div *ngFor="let missile of game.currentPlayer.missiles" class="missile grow">
+      <span>{{missile.title}}</span>
+      <span>{{missile.count}}</span>
+    </div>
+  </div>
 </div>
 <app-slider [game]="game"></app-slider>
 <div>
   <div class="flex">
     <div (touchstart)="rotate(true, false)" (touchend)="rotate(true, true)" class="ingame-btn small" style="background-image: url('assets/arrow-left-rot.png')"></div>
-    <span class="num grow">36</span>
+    <span class="num grow">{{toInt(game.currentPlayer.bezelRotationDegrees)}}</span>
     <div (touchstart)="rotate(false, false)" (touchend)="rotate(false, true)" class="ingame-btn small" style="background-image: url('assets/arrow-right-rot.png')"></div>
   </div>
   <div class="flex top-space">
     <div (touchstart)="move(true, false)" (touchend)="move(true, true)" class="ingame-btn small" style="background-image: url('assets/arrow-left.png')"></div>
-    <span class="num grow">120</span>
+    <span class="num grow">{{toInt(game.currentPlayer.fuel)}}</span>
     <div (touchstart)="move(false, false)" (touchend)="move(false, true)" class="ingame-btn small" style="background-image: url('assets/arrow-right.png')"></div>
   </div>
 </div>
 <div class="flex">
-  <div (touchstart)="fire()" class="ingame-btn top-space grow">FIRE</div>
+  <div (click)="fire()" class="ingame-btn top-space grow">FIRE</div>
 </div>

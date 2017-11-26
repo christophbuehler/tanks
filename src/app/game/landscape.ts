@@ -7,12 +7,12 @@ import { Observable } from 'rxjs/Observable';
 
 export class Landscape {
   private vertices: number[][];
-  private resolution = 4;
+  private resolution = 1;
   private hills = 8;
   private minHeight = 60;
   private maxHeight = 260;
-  private minHillDist = 40;
-  private maxHillDist = 100;
+  private minHillDist = 20;
+  private maxHillDist = 60;
   private dim: V2;
   private rndGen: any;
 
@@ -40,12 +40,13 @@ export class Landscape {
 
     ctx.closePath();
 
-    const pat = ctx.createPattern(this.background, 'repeat');
-    ctx.fillStyle = pat;
+    // const pat = ctx.createPattern(this.background, 'repeat');
+    // ctx.fillStyle = pat;
+    ctx.fillStyle = '#408950';
 
     ctx.fill();
-    ctx.lineWidth = 4;
-    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = '#004411';
     ctx.stroke();
   }
 
@@ -58,8 +59,8 @@ export class Landscape {
         if (dist > power * 10) return;
         const step = 4;
         const f = power * 10 - dist;
-        const rndForce = Math.random() * .2 + .8;
-        v[1] -= ~~((f * power * .2 * rndForce) / step) * step;
+        const rndForce = Math.random() * .1 + .8;
+        v[1] -= ~~((f * .2 * rndForce) / step) * step;
       });
     return true;
   }
