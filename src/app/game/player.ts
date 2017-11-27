@@ -4,6 +4,7 @@ import { Game } from "./game";
 import { LargeBombMissile } from './missiles/large-bomb-missile';
 import { SpreadMissile } from './missiles/spread-missile';
 import { SmallMissile } from './missiles/small-missile';
+import { TracerMissile } from './missiles/tracer-missile';
 
 export class Player {
   dim: V2 = new V2(21, 40);
@@ -14,7 +15,7 @@ export class Player {
   bezelRotationDegrees = 0;
   health = 100;
   bezelRotation = 1;
-  fuel =  120;
+  fuel =  160;
   activeMissileIndex = 0;
   missiles: { title, count, missile }[] = [
     {
@@ -31,6 +32,11 @@ export class Player {
       title: 'Atomic Bomb',
       count: 4,
       missile: LargeBombMissile
+    },
+    {
+      title: 'Tracer Rocket',
+      count: 4,
+      missile: TracerMissile
     }
   ];
 
@@ -94,15 +100,18 @@ export class Player {
 
     this.game.audio.play('missileLaunch');
 
-    this.game.launch(new (this.missiles[this.activeMissileIndex].missile)({
-      pos: this.pos
-        .add(new V2(Math.cos(verticalVehicleRotation) * this.bezelOffset, Math.sin(verticalVehicleRotation) * this.bezelOffset))
-        .add(new V2(Math.cos(rotation) * this.bezelLength, Math.sin(rotation) * this.bezelLength)),
-      vel,
-      game: this.game,
-    }));
-
-    this.game.switchPlayer();
+    this.game
+      .launch(new (this.missiles[this.activeMissileIndex].missile)({
+        pos: this.pos
+          .add(new V2(Math.cos(verticalVehicleRotation) * this.bezelOffset, Math.sin(verticalVehicleRotation) * this.bezelOffset))
+          .add(new V2(Math.cos(rotation) * this.bezelLength, Math.sin(rotation) * this.bezelLength)),
+        vel,
+        game: this.game,
+      }))
+      .subscribe(void 0, void 0, () => {
+        this.game.switchPlayer();
+        console.log("switched player");
+      });
   }
 
   paint(ctx: CanvasRenderingContext2D): void {

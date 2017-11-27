@@ -4,12 +4,12 @@
         <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
         <param name="onload" value="true" />
     </feature>
-    <name>HelloCordova</name>
+    <name>Arms Race</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        A tank game.
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="christoph@cbuehler.li" href="https://cbuehler.li">
+        Christoph Buhler
     </author>
     <content src="index.html" />
     <access origin="*" />

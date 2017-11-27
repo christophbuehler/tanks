@@ -17,4 +17,9 @@ export class V2 {
       const y = Math.abs(this.y - v2.y);
       return Math.sqrt(x * x + y * y);
     }
+
+    pointTo(v2: V2, radius: number): V2 {
+      const phi = Math.atan2(v2.y - this.y, v2.x - this.x);
+      return new V2(Math.cos(phi) * radius, Math.sin(phi) * radius);
+    }
 }

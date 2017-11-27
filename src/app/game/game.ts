@@ -51,8 +51,9 @@ export class Game {
     this.update();
   }
 
-  launch(missile: Missile): void {
+  launch(missile: Missile): Observable<V2> {
       this.missiles.push(missile);
+      return missile.collision;
   }
 
   private update(): void {
