@@ -11,12 +11,12 @@ export class Game {
   playerChange: Observable<Player>;
   currentPlayer: Player;
   audio: AudioManager;
+  players: Player[] = [];
 
   private playerChangeSubject: Subject<Player>;
   private ctx: CanvasRenderingContext2D;
   private landscape: Landscape;
   private missiles: Missile[] = [];
-  private players: Player[] = [];
   private bg: HTMLImageElement;
 
   constructor(
@@ -73,7 +73,7 @@ export class Game {
       this.canvas.width = rect.width;
       this.canvas.height = rect.height;
 
-      this.landscape = new Landscape(Math.random(), new V2(rect.width, rect.height), this.bg);
+      this.landscape = new Landscape(Math.random(), new V2(rect.width, rect.height), this.bg, this);
 
       // flip the y axis
       this.ctx.transform(1, 0, 0, -1, 0, rect.height);

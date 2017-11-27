@@ -17,7 +17,7 @@
   </div>
   <div class="flex top-space">
     <div (touchstart)="move(true, false)" (touchend)="move(true, true)" class="ingame-btn small" style="background-image: url('assets/arrow-left.png')"></div>
-    <span class="num grow">{{toInt(game.currentPlayer.fuel)}}</span>
+    <span class="num grow">{{toInt(game.currentPlayer.fuel)}} m</span>
     <div (touchstart)="move(false, false)" (touchend)="move(false, true)" class="ingame-btn small" style="background-image: url('assets/arrow-right.png')"></div>
   </div>
 </div>

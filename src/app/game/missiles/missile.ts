@@ -10,8 +10,9 @@ export class Missile {
 
   private collisionSubject: Subject<V2>;
   private highPointSubject: Subject<V2>;
-  private force: V2 = new V2(0, -.1);
+  private force: V2 = new V2(0, -.015);
   private reachedHighPoint = false;
+  private impact: Impact;
 
   constructor(
     public pos: V2,
@@ -28,6 +29,7 @@ export class Missile {
   }
 
   paint(ctx: CanvasRenderingContext2D): void {
+    if (this.impact) this.impact.paint(ctx, this.pos);
     if (this.collided) return;
     this.paintMissile(ctx, this.pos, 1);
     this.paintMissile(ctx, this.pos.subtract(this.vel), .4);
@@ -49,6 +51,7 @@ export class Missile {
     if (landscape.collide(this)) {
       this.collisionSubject.next(this.pos);
       this.collided = true;
+      this.impact = new Impact(this.power);
       return;
     }
 
@@ -59,5 +62,40 @@ export class Missile {
       this.highPointSubject.next(this.pos);
       this.reachedHighPoint = true;
     }
+  }
+}
+
+class Impact {
+  private state = 0;
+  constructor(
+    private power: number
+  ) { }
+
+  paint(ctx, pos) {
+    if (this.state > 20) return;
+
+    const r = 8 + this.state * .05 * this.power;
+    const grd = ctx.createRadialGradient(pos.x, pos.y, 5, pos.x, pos.y, r);
+    grd.addColorStop(0, 'yellow');
+    grd.addColorStop(1, 'red');
+
+    ctx.beginPath();
+    ctx.arc(pos.x, pos.y, r, 0, Math.PI * 2);
+    ctx.fillStyle = grd;
+    ctx.closePath();
+    ctx.fill();
+
+    // ctx.beginPath();
+    // ctx.arc(pos.x, pos.y, this.state * this.state * .02, 0, Math.PI * 2);
+    // ctx.fillStyle = '#ff8800';
+    // ctx.closePath();
+    // ctx.fill();
+
+    // ctx.beginPath();
+    // ctx.arc(pos.x, pos.y, this.state * this.state * .01, 0, Math.PI * 2);
+    // ctx.fillStyle = '#ffff00';
+    // ctx.closePath();
+    // ctx.fill();
+    this.state++;
   }
 }

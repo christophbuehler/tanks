@@ -6,7 +6,7 @@
   "apps": [
     {
       "root": "src",
-      "outDir": "dist",
+      "outDir": "arms-race/www",
       "assets": [
         "assets",
         "favicon.ico"

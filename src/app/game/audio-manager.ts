@@ -4,7 +4,13 @@ export class AudioManager {
     missileLaunch: {
       source: 'assets/artillery1.mp3',
       startTime: 420,
-      duration: 800,
+      duration: 420,
+      element: void 0
+    },
+    missileImpact: {
+      source: 'assets/explosion1.mp3',
+      startTime: 0,
+      duration: 420,
       element: void 0
     }
   };

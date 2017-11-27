@@ -1,35 +1,42 @@
 import { V2 } from "./v2";
 import { Landscape } from "./landscape";
 import { Game } from "./game";
-import { LargeBombMissile } from "./missiles/large-bomb-missile";
+import { LargeBombMissile } from './missiles/large-bomb-missile';
 import { SpreadMissile } from './missiles/spread-missile';
 import { SmallMissile } from './missiles/small-missile';
 
 export class Player {
   dim: V2 = new V2(21, 40);
   pos: V2;
-  vel: V2 = new V2(0, 0);
-  force = 5;
+  force = 50;
+  vel = 0;
   rotVel = 0;
   bezelRotationDegrees = 0;
+  health = 100;
   bezelRotation = 1;
   fuel =  120;
   activeMissileIndex = 0;
   missiles: { title, count, missile }[] = [
     {
-      title: 'test missile',
+      title: 'Tiny Missile',
       count: 99,
       missile: SmallMissile
     },
     {
-      title: 'red rain',
-      count: 99,
+      title: 'Red Rain',
+      count: 4,
       missile: SpreadMissile
+    },
+    {
+      title: 'Atomic Bomb',
+      count: 4,
+      missile: LargeBombMissile
     }
   ];
 
   private vehicleRotation: number;
   private height = 4;
+  private bezelOffset = 7;
   private bezelLength = 14;
   private launchAudio: HTMLAudioElement;
 
@@ -45,15 +52,18 @@ export class Player {
   }
 
   update() {
-    const velX = this.vel.x;
-    const adjustedVelX = velX === 0
+    const velWithFuel = this.vel === 0
       ? 0
-      : (velX > 0
-          ? Math.min(velX, this.fuel)
-          : Math.max(velX, -this.fuel));
+      : (this.vel > 0
+          ? Math.min(this.vel, this.fuel)
+          : Math.max(this.vel, -this.fuel));
 
-    this.pos.x += adjustedVelX;
-    this.fuel -= Math.abs(adjustedVelX);
+    const dY = this.landscape.yValue(this.pos.x + 1) - this.landscape.yValue(this.pos.x);
+    const alpha = Math.atan(dY / 1);
+    const velX = Math.cos(alpha) * velWithFuel;
+
+    this.pos.x += velX;
+    this.fuel -= Math.abs(velWithFuel);
     const xPos = this.pos.x;
     this.bezelRotation += this.rotVel;
     this.bezelRotation = Math.max(0, this.bezelRotation);
@@ -64,9 +74,21 @@ export class Player {
     this.pos.y = this.landscape.yValue(xPos);
   }
 
+  setForce(val: number): number {
+    return this.force = Math.min(val, this.health);
+  }
+
+  impact(pos, power): void {
+    let f = 20 + power - pos.dist(this.pos);
+    if (f <= 0) return;
+    f += power;
+    this.health = Math.max(0, this.health - f);
+    this.setForce(this.force);
+  }
+
   launch() {
     const rotation = this.vehicleRotation + this.bezelRotation;
-    const force = this.force * .8;
+    const force = this.force * .04;
     const vel = new V2(Math.cos(rotation) * force, Math.sin(rotation) * force);
     const verticalVehicleRotation = this.vehicleRotation + Math.PI / 2;
 
@@ -74,7 +96,7 @@ export class Player {
 
     this.game.launch(new (this.missiles[this.activeMissileIndex].missile)({
       pos: this.pos
-        .add(new V2(Math.cos(verticalVehicleRotation) * 7, Math.sin(verticalVehicleRotation) * 7))
+        .add(new V2(Math.cos(verticalVehicleRotation) * this.bezelOffset, Math.sin(verticalVehicleRotation) * this.bezelOffset))
         .add(new V2(Math.cos(rotation) * this.bezelLength, Math.sin(rotation) * this.bezelLength)),
       vel,
       game: this.game,
@@ -90,15 +112,15 @@ export class Player {
 
     // bezel
     ctx.beginPath();
-    ctx.moveTo(0, 7);
-    ctx.lineTo(Math.cos(this.bezelRotation) * this.bezelLength, Math.sin(this.bezelRotation) * this.bezelLength + 7);
+    ctx.moveTo(0, this.bezelOffset);
+    ctx.lineTo(Math.cos(this.bezelRotation) * this.bezelLength, Math.sin(this.bezelRotation) * this.bezelLength + this.bezelOffset);
     ctx.closePath();
     ctx.lineWidth = 2;
     ctx.strokeStyle = '#000800';
     ctx.stroke();
     ctx.beginPath();
-    ctx.moveTo(Math.cos(this.bezelRotation) * (this.bezelLength - 2), Math.sin(this.bezelRotation) * (this.bezelLength - 2) + 7);
-    ctx.lineTo(Math.cos(this.bezelRotation) * this.bezelLength, Math.sin(this.bezelRotation) * this.bezelLength + 7);
+    ctx.moveTo(Math.cos(this.bezelRotation) * (this.bezelLength - 2), Math.sin(this.bezelRotation) * (this.bezelLength - 2) + this.bezelOffset);
+    ctx.lineTo(Math.cos(this.bezelRotation) * this.bezelLength, Math.sin(this.bezelRotation) * this.bezelLength + this.bezelOffset);
     ctx.closePath();
     ctx.lineWidth = 2.5;
     ctx.strokeStyle = '#001000';

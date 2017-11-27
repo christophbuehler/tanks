@@ -4,6 +4,7 @@ import { Missile } from './missiles/missile';
 import { V2 } from './v2';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Observable } from 'rxjs/Observable';
+import { Game } from './game';
 
 export class Landscape {
   private vertices: number[][];
@@ -12,14 +13,15 @@ export class Landscape {
   private minHeight = 60;
   private maxHeight = 260;
   private minHillDist = 20;
-  private maxHillDist = 60;
+  private maxHillDist = 120;
   private dim: V2;
   private rndGen: any;
 
   constructor(
     private seed: number,
     dim: V2,
-    private background: HTMLImageElement
+    private background: HTMLImageElement,
+    private game: Game
   ) {
     const padding: V2 = new V2(16, 16);
     this.dim = dim.add(padding);
@@ -42,25 +44,23 @@ export class Landscape {
 
     // const pat = ctx.createPattern(this.background, 'repeat');
     // ctx.fillStyle = pat;
-    ctx.fillStyle = '#408950';
+    ctx.fillStyle = '#fff';
 
     ctx.fill();
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = '#004411';
-    ctx.stroke();
   }
 
   collide({ pos, power }: Missile): boolean {
     const yVal: number = this.yValue(pos.x);
     if (yVal < pos.y) return false;
+    this.game.players.forEach(p => p.impact(pos, power));
+    this.game.audio.play('missileImpact');
     this.vertices
       .forEach(v => {
         const dist = Math.abs(v[0] - pos.x);
-        if (dist > power * 10) return;
-        const step = 4;
-        const f = power * 10 - dist;
-        const rndForce = Math.random() * .1 + .8;
-        v[1] -= ~~((f * .2 * rndForce) / step) * step;
+        const r = 20 + power;
+        if (dist > r) return;
+        const step = 2;
+        v[1] -= ~~((Math.sin(((Math.PI / 2) / r) * (r - dist)) * power) / step) * step;
       });
     return true;
   }

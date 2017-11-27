@@ -4,11 +4,16 @@
   -moz-user-select: none;
   -khtml-user-select: none;
   -webkit-user-select: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0)
 }
 
 body {
-  background-image: url('assets/cloud.jpg');
+  background-image: url('assets/bg.png');
+  background-size: cover;
   margin: 0;
   padding: 0;
-  font-family: 'Roboto';
+  font-family: 'Buenard', serif;
+  -webkit-touch-callout: none;
+  -webkit-text-size-adjust: none;
+  -webkit-user-select: none;
 }

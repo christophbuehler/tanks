@@ -27,9 +27,9 @@ export class ControlsComponent implements OnInit {
   }
 
   move(left: boolean, stop: boolean): void {
-    this.game.currentPlayer.vel = new V2(stop
+    this.game.currentPlayer.vel = stop
       ? 0
-      : (left ? -this.speed : this.speed), 0);
+      : (left ? -this.speed : this.speed);
   }
 
   rotate(left: boolean, stop: boolean): void {

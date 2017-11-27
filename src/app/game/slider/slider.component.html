@@ -1,5 +1,6 @@
 <div (touchmove)="change($event)" class="wrapper">
   <div class="shape">
-    <div [style.height]="height + '%'" class="indicator"></div>
+    <div [style.height]="game.currentPlayer.health + '%'" class="health"></div>
+    <div [style.height]="game.currentPlayer.force + '%'" class="indicator"></div>
   </div>
 </div>

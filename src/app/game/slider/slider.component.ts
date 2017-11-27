@@ -9,15 +9,11 @@ import { Game } from '../game';
 export class SliderComponent implements OnInit {
   @Input() game: Game;
 
-  height = 20;
-
   constructor(
     private el: ElementRef
   ) { }
 
   ngOnInit() {
-    this.game.playerChange
-      .subscribe(p => this.height = p.force * 10);
   }
 
   change(ev) {
@@ -27,8 +23,6 @@ export class SliderComponent implements OnInit {
     const start = rect.y + totalHeight;
     const newHeight = Math.max(start - touch.clientY, 0);
     const widthInPercent = Math.min((100 / totalHeight) * newHeight, 100);
-    const force = ~~((widthInPercent + 5) / 10);
-    this.game.currentPlayer.force = force;
-    this.height = force * 10;
+    const force = this.game.currentPlayer.setForce(~~((widthInPercent + 5) / 10) * 10);
   }
 }
