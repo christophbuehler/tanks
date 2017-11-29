@@ -1,1 +1,2 @@
-<app-game></app-game>
+<app-menu [class.hide]="gameStarted" [view]="view" (startGame)="startGame($event)"></app-menu>
+<app-game [settings]="settings" (gameOver)="gameOver($event)" *ngIf="gameStarted"></app-game>

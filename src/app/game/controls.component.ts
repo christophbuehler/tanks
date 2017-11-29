@@ -10,7 +10,7 @@ import { V2 } from './v2';
 export class ControlsComponent implements OnInit {
   @Input() game: Game;
 
-  private speed = .2;
+  private speed = .4;
 
   constructor() { }
 

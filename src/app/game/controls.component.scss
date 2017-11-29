@@ -4,14 +4,20 @@
   white-space: nowrap;
   height: 100%;
   background: #000;
-  // background: url('https://i.pinimg.com/originals/40/f3/fc/40f3fc555a545028ba354c5efcb65c63.jpg');
   padding: 32px 8px;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  .player-name {
+    color: #fff;
+    font-size: 12pt;
+    text-align: center;
+    height: 32px;
+    line-height: 32px;
+    margin-bottom: 4px;
+  }
   .missiles {
     overflow: hidden;
-    white-space: nowrap;
     height: 32px;
     width: 100%;
     position: relative;
@@ -23,7 +29,7 @@
       width: 100%;
       transition: transform .1s ease;
       .missile {
-        display: inline-block;
+        display: block;
         color: #fff;
         line-height: 32px;
         height: 32px;
@@ -70,5 +76,9 @@
   }
   .top-space {
     margin-top: 4px;
+  }
+  .fire-btn {
+    border: 1px solid rgba(255, 255, 255, .2);
+    background: rgba(255, 10, 10, .4);
   }
 }

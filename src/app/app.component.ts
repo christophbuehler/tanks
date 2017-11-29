@@ -6,5 +6,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'app';
+  gameStarted = false;
+  settings: any;
+  view = 'main';
+
+  startGame(settings) {
+    this.settings = settings;
+    this.gameStarted = true;
+  }
+
+  gameOver() {
+    this.view = 'gameover';
+    this.gameStarted = false;
+  }
 }

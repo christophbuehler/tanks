@@ -5,6 +5,8 @@ import { LargeBombMissile } from './missiles/large-bomb-missile';
 import { SpreadMissile } from './missiles/spread-missile';
 import { SmallMissile } from './missiles/small-missile';
 import { TracerMissile } from './missiles/tracer-missile';
+import { TwisterMissile } from './missiles/twister-missile';
+import { HornetMissile } from './missiles/hornet-missile';
 
 export class Player {
   dim: V2 = new V2(21, 40);
@@ -16,6 +18,7 @@ export class Player {
   health = 100;
   bezelRotation = 1;
   fuel =  160;
+  launched = false;
   activeMissileIndex = 0;
   missiles: { title, count, missile }[] = [
     {
@@ -30,13 +33,23 @@ export class Player {
     },
     {
       title: 'Atomic Bomb',
-      count: 4,
+      count: 1,
       missile: LargeBombMissile
     },
     {
       title: 'Tracer Rocket',
-      count: 4,
+      count: 1,
       missile: TracerMissile
+    },
+    // {
+    //   title: 'Twister Missile',
+    //   count: 4,
+    //   missile: TwisterMissile
+    // },
+    {
+      title: 'Hornet Attack',
+      count: 1,
+      missile: HornetMissile
     }
   ];
 
@@ -47,6 +60,7 @@ export class Player {
   private launchAudio: HTMLAudioElement;
 
   constructor(
+    public name: string,
     private color: string,
     xPos: number,
     private landscape: Landscape,
@@ -89,10 +103,18 @@ export class Player {
     if (f <= 0) return;
     f += power;
     this.health = Math.max(0, this.health - f);
+    if (this.health === 0) this.game.finish(this);
     this.setForce(this.force);
   }
 
   launch() {
+    if (this.launched) return;
+    this.launched = true;
+    const missile = this.missiles[this.activeMissileIndex];
+    if (missile.count < 1) return false;
+    missile.count--;
+    this.activeMissileIndex = 0;
+
     const rotation = this.vehicleRotation + this.bezelRotation;
     const force = this.force * .04;
     const vel = new V2(Math.cos(rotation) * force, Math.sin(rotation) * force);
@@ -101,7 +123,7 @@ export class Player {
     this.game.audio.play('missileLaunch');
 
     this.game
-      .launch(new (this.missiles[this.activeMissileIndex].missile)({
+      .launch(new (missile.missile)({
         pos: this.pos
           .add(new V2(Math.cos(verticalVehicleRotation) * this.bezelOffset, Math.sin(verticalVehicleRotation) * this.bezelOffset))
           .add(new V2(Math.cos(rotation) * this.bezelLength, Math.sin(rotation) * this.bezelLength)),
@@ -110,7 +132,6 @@ export class Player {
       }))
       .subscribe(void 0, void 0, () => {
         this.game.switchPlayer();
-        console.log("switched player");
       });
   }
 
@@ -125,27 +146,33 @@ export class Player {
     ctx.lineTo(Math.cos(this.bezelRotation) * this.bezelLength, Math.sin(this.bezelRotation) * this.bezelLength + this.bezelOffset);
     ctx.closePath();
     ctx.lineWidth = 2;
-    ctx.strokeStyle = '#000800';
+    ctx.strokeStyle = this.color;
     ctx.stroke();
     ctx.beginPath();
     ctx.moveTo(Math.cos(this.bezelRotation) * (this.bezelLength - 2), Math.sin(this.bezelRotation) * (this.bezelLength - 2) + this.bezelOffset);
     ctx.lineTo(Math.cos(this.bezelRotation) * this.bezelLength, Math.sin(this.bezelRotation) * this.bezelLength + this.bezelOffset);
     ctx.closePath();
     ctx.lineWidth = 2.5;
-    ctx.strokeStyle = '#001000';
+    ctx.strokeStyle = this.color;
     ctx.stroke();
 
     // torso
     ctx.beginPath();
     ctx.moveTo(-this.dim.x / 2, 2);
+    ctx.lineTo(-this.dim.x / 2 + 4, 2);
+    ctx.lineTo(-this.dim.x / 2 + 4, 0);
+    ctx.lineTo(this.dim.x / 2 - 4, 0);
+    ctx.lineTo(this.dim.x / 2 - 4, 2);
     ctx.lineTo(this.dim.x / 2, 2);
     ctx.lineTo(this.dim.x / 2 - 2, this.height + 2);
+    ctx.lineTo(this.dim.x / 2 - 6, this.height + 2);
+    ctx.lineTo(this.dim.x / 2 - 6, this.height + 5);
+    ctx.lineTo(-this.dim.x / 2 + 6, this.height + 5);
+    ctx.lineTo(-this.dim.x / 2 + 6, this.height + 2);
     ctx.lineTo(-this.dim.x / 2 + 2, this.height + 2);
-    ctx.fillStyle = '#002000';
+    ctx.fillStyle = this.color;
     ctx.fill();
     ctx.closePath();
-
-    ctx.fillRect(-4, 4, 8, 5);
 
     // wheels
     ctx.arc(-5, 2, 3, 0, Math.PI * 2);

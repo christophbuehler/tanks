@@ -7,6 +7,8 @@ import { Observable } from 'rxjs/Observable';
 import { Game } from './game';
 
 export class Landscape {
+  dim: V2;
+
   private vertices: number[][];
   private resolution = 1;
   private hills = 8;
@@ -14,13 +16,12 @@ export class Landscape {
   private maxHeight = 260;
   private minHillDist = 20;
   private maxHillDist = 120;
-  private dim: V2;
   private rndGen: any;
+  private biome: Biome = new IceBiome(this);
 
   constructor(
     private seed: number,
     dim: V2,
-    private background: HTMLImageElement,
     private game: Game
   ) {
     const padding: V2 = new V2(16, 16);
@@ -41,10 +42,8 @@ export class Landscape {
     });
 
     ctx.closePath();
-
-    // const pat = ctx.createPattern(this.background, 'repeat');
-    // ctx.fillStyle = pat;
-    ctx.fillStyle = '#fff';
+    ctx.fillStyle = this.biome.color;
+    this.biome.paint(ctx);
 
     ctx.fill();
   }
@@ -109,5 +108,32 @@ export class Landscape {
 
   private hillDist(): number {
     return this.minHillDist + this.rndGen(this.maxHillDist - this.minHillDist);
+  }
+}
+
+interface Biome {
+  color: string;
+  paint(ctx: CanvasRenderingContext2D): void;
+}
+
+class MeadowBiome implements Biome {
+  color = '#126212';
+  constructor(
+    private landscape: Landscape
+  ) { }
+
+  paint(ctx: CanvasRenderingContext2D): void {
+
+  }
+}
+
+class IceBiome implements Biome {
+  color = '#fff';
+  constructor(
+    private landscape: Landscape
+  ) { }
+
+  paint(ctx: CanvasRenderingContext2D): void {
+
   }
 }

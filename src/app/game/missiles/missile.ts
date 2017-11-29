@@ -48,6 +48,13 @@ export class Missile {
   }
 
   update(landscape: Landscape): void {
+    if (this.pos.x <= 0 || this.pos.x >= landscape.dim.x) {
+      this.collided = true;
+      this.collisionSubject.next(this.pos);
+      this.done();
+      return;
+    }
+
     if (this.collide(landscape)) return;
 
     this.vel = this.vel.add(this.force);

@@ -17,11 +17,8 @@ export class SliderComponent implements OnInit {
   }
 
   change(ev) {
-
     const touch = ev.touches[0];
     const rect = this.el.nativeElement.getBoundingClientRect();
-
-
     const totalHeight = rect.height;
     const start = rect.top + totalHeight;
     const newHeight = Math.max(start - touch.clientY, 0);

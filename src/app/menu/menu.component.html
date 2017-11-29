@@ -1,13 +1,29 @@
 <h1>Arms Race</h1>
-<section name="fullscreen">
-    <button class="btn fullscreen-btn">Play in Fullscreen</button>
+<section *ngIf="view === 'main'" name="fullscreen">
+  <div>
+      <div (click)="view = 'singleplayer'" class="btn">Singleplayer</div>
+  </div>
+  <div>
+      <div (click)="view = 'multiplayer'" class="btn">Multiplayer</div>
+  </div>
 </section>
-<section name="choose-player1">
-    <input type="text" id="player1-name" placeholder="Player 1 Name"><br>
-    <button class="btn toplayer2-btn">Set Player 2</button>
+<section *ngIf="view === 'singleplayer'">
+  <span>coming soon...</span>
 </section>
-<section name="choose-player2">
-    <input type="text" id="player1-name" placeholder="Player 2 Name"><br>
-    <button class="btn start-btn">Start Game!</button>
+<section *ngIf="view === 'gameover'">
+  <h2>Game Over</h2>
+  <div>
+      <div (click)="view = 'main'" class="btn">Back</div>
+  </div>
 </section>
-<img style="display: none;" src="https://i.pinimg.com/736x/f4/85/99/f48599bcbe27682a0f98a2d9838adf40--texture-snow.jpg" id="bg" alt="">
+<section *ngIf="view === 'multiplayer'">
+  <div>
+    <input type="text" [(ngModel)]="settings.playerOneName" placeholder="Player One Name">
+  </div>
+  <div>
+    <input type="text" [(ngModel)]="settings.playerTwoName" placeholder="Player Two Name">
+  </div>
+  <div>
+    <div (click)="startGame.emit(settings)" class="btn">Start Game</div>
+  </div>
+</section>

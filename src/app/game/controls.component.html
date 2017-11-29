@@ -1,6 +1,6 @@
+<div class="player-name">{{game.currentPlayer.name}}</div>
 <div class="missiles">
-  {{ game.currentPlayer.activeMissileIndex }}
-  <div [style.transform]="'translate(' + (-game.currentPlayer.activeMissileIndex * 100) + '%, 0)'"
+  <div [style.transform]="'translate(0, ' + (-game.currentPlayer.activeMissileIndex * 100) + '%)'"
     (touchstart)="switchMissile()" class="inner">
     <div *ngFor="let missile of game.currentPlayer.missiles" class="missile grow">
       <span>{{missile.title}}</span>
@@ -12,7 +12,7 @@
 <div>
   <div class="flex">
     <div (touchstart)="rotate(true, false)" (touchend)="rotate(true, true)" class="ingame-btn small" style="background-image: url('assets/arrow-left-rot.png')"></div>
-    <span class="num grow">{{toInt(game.currentPlayer.bezelRotationDegrees)}}</span>
+    <span class="num grow">{{toInt(game.currentPlayer.bezelRotationDegrees)}} &deg;</span>
     <div (touchstart)="rotate(false, false)" (touchend)="rotate(false, true)" class="ingame-btn small" style="background-image: url('assets/arrow-right-rot.png')"></div>
   </div>
   <div class="flex top-space">
@@ -22,5 +22,5 @@
   </div>
 </div>
 <div class="flex">
-  <div (click)="fire()" class="ingame-btn top-space grow">FIRE</div>
+  <div (click)="fire()" class="ingame-btn fire-btn top-space grow">FIRE</div>
 </div>

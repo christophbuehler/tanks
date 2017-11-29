@@ -13,13 +13,11 @@ export class TracerMissile extends Missile {
     vel,
     game
   }) {
-    super(pos, vel, 3, 2, '#000');
+    super(pos, vel, 18, 2, '#000');
     this.game = game;
   }
 
   update(landscape: Landscape): void {
-    if (this.collide(landscape)) return;
-
     if (this.reachedHighPoint) {
       const closestPlayer = this.game.players
         .filter(p => p !== this.game.currentPlayer)
@@ -32,9 +30,6 @@ export class TracerMissile extends Missile {
       this.force = this.pos.pointTo(closestPlayer.pos, .2);
     }
 
-    this.vel = this.vel.add(this.force);
-    this.pos = this.pos.add(this.vel);
-
-    this.checkHighPoint();
+    super.update(landscape);
   }
 }

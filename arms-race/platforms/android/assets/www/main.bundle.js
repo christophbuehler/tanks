@@ -20,7 +20,7 @@ webpackEmptyAsyncContext.id = "../../../../../src/$$_lazy_route_resource lazy re
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<app-game></app-game>\n"
+module.exports = "<app-menu [class.hide]=\"gameStarted\" [view]=\"view\" (startGame)=\"startGame($event)\"></app-menu>\n<app-game [settings]=\"settings\" (gameOver)=\"gameOver($event)\" *ngIf=\"gameStarted\"></app-game>\n"
 
 /***/ }),
 
@@ -57,8 +57,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 var AppComponent = (function () {
     function AppComponent() {
-        this.title = 'app';
+        this.gameStarted = false;
+        this.view = 'main';
     }
+    AppComponent.prototype.startGame = function (settings) {
+        this.settings = settings;
+        this.gameStarted = true;
+    };
+    AppComponent.prototype.gameOver = function () {
+        this.view = 'gameover';
+        this.gameStarted = false;
+    };
     AppComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'app-root',
@@ -160,7 +169,7 @@ var AudioManager = (function () {
 /***/ "../../../../../src/app/game/controls.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"missiles\">\r\n  {{ game.currentPlayer.activeMissileIndex }}\r\n  <div [style.transform]=\"'translate(' + (-game.currentPlayer.activeMissileIndex * 100) + '%, 0)'\"\r\n    (touchstart)=\"switchMissile()\" class=\"inner\">\r\n    <div *ngFor=\"let missile of game.currentPlayer.missiles\" class=\"missile grow\">\r\n      <span>{{missile.title}}</span>\r\n      <span>{{missile.count}}</span>\r\n    </div>\r\n  </div>\r\n</div>\r\n<app-slider [game]=\"game\"></app-slider>\r\n<div>\r\n  <div class=\"flex\">\r\n    <div (touchstart)=\"rotate(true, false)\" (touchend)=\"rotate(true, true)\" class=\"ingame-btn small\" style=\"background-image: url('assets/arrow-left-rot.png')\"></div>\r\n    <span class=\"num grow\">{{toInt(game.currentPlayer.bezelRotationDegrees)}}</span>\r\n    <div (touchstart)=\"rotate(false, false)\" (touchend)=\"rotate(false, true)\" class=\"ingame-btn small\" style=\"background-image: url('assets/arrow-right-rot.png')\"></div>\r\n  </div>\r\n  <div class=\"flex top-space\">\r\n    <div (touchstart)=\"move(true, false)\" (touchend)=\"move(true, true)\" class=\"ingame-btn small\" style=\"background-image: url('assets/arrow-left.png')\"></div>\r\n    <span class=\"num grow\">{{toInt(game.currentPlayer.fuel)}} m</span>\r\n    <div (touchstart)=\"move(false, false)\" (touchend)=\"move(false, true)\" class=\"ingame-btn small\" style=\"background-image: url('assets/arrow-right.png')\"></div>\r\n  </div>\r\n</div>\r\n<div class=\"flex\">\r\n  <div (click)=\"fire()\" class=\"ingame-btn top-space grow\">FIRE</div>\r\n</div>\r\n"
+module.exports = "<div class=\"player-name\">{{game.currentPlayer.name}}</div>\r\n<div class=\"missiles\">\r\n  <div [style.transform]=\"'translate(0, ' + (-game.currentPlayer.activeMissileIndex * 100) + '%)'\"\r\n    (touchstart)=\"switchMissile()\" class=\"inner\">\r\n    <div *ngFor=\"let missile of game.currentPlayer.missiles\" class=\"missile grow\">\r\n      <span>{{missile.title}}</span>\r\n      <span>{{missile.count}}</span>\r\n    </div>\r\n  </div>\r\n</div>\r\n<app-slider [game]=\"game\"></app-slider>\r\n<div>\r\n  <div class=\"flex\">\r\n    <div (touchstart)=\"rotate(true, false)\" (touchend)=\"rotate(true, true)\" class=\"ingame-btn small\" style=\"background-image: url('assets/arrow-left-rot.png')\"></div>\r\n    <span class=\"num grow\">{{toInt(game.currentPlayer.bezelRotationDegrees)}}</span>\r\n    <div (touchstart)=\"rotate(false, false)\" (touchend)=\"rotate(false, true)\" class=\"ingame-btn small\" style=\"background-image: url('assets/arrow-right-rot.png')\"></div>\r\n  </div>\r\n  <div class=\"flex top-space\">\r\n    <div (touchstart)=\"move(true, false)\" (touchend)=\"move(true, true)\" class=\"ingame-btn small\" style=\"background-image: url('assets/arrow-left.png')\"></div>\r\n    <span class=\"num grow\">{{toInt(game.currentPlayer.fuel)}} m</span>\r\n    <div (touchstart)=\"move(false, false)\" (touchend)=\"move(false, true)\" class=\"ingame-btn small\" style=\"background-image: url('assets/arrow-right.png')\"></div>\r\n  </div>\r\n</div>\r\n<div class=\"flex\">\r\n  <div (click)=\"fire()\" class=\"ingame-btn top-space grow\">FIRE</div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -172,7 +181,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ":host {\n  font-size: 0;\n  position: relative;\n  white-space: nowrap;\n  height: 100%;\n  background: #000;\n  padding: 32px 8px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  box-sizing: border-box; }\n  :host .missiles {\n    overflow: hidden;\n    white-space: nowrap;\n    height: 32px;\n    width: 100%;\n    position: relative; }\n    :host .missiles .inner {\n      position: absolute;\n      left: 0;\n      top: 0;\n      height: 100%;\n      width: 100%;\n      transition: -webkit-transform .1s ease;\n      transition: transform .1s ease;\n      transition: transform .1s ease, -webkit-transform .1s ease; }\n      :host .missiles .inner .missile {\n        display: inline-block;\n        color: #fff;\n        line-height: 32px;\n        height: 32px;\n        font-size: 10pt;\n        padding: 0 16px;\n        box-sizing: border-box;\n        width: 100%; }\n  :host .space {\n    -webkit-box-flex: 1;\n        -ms-flex-positive: 1;\n            flex-grow: 1; }\n  :host .ingame-btn {\n    color: #fff;\n    width: 120px;\n    height: 32px;\n    position: relative;\n    background-size: auto 22px;\n    background-repeat: no-repeat;\n    background-position: center;\n    font-size: 12pt;\n    text-align: center;\n    line-height: 32px;\n    letter-spacing: 1px;\n    text-transform: uppercase; }\n    :host .ingame-btn.small {\n      width: 48px; }\n  :host .grow {\n    -webkit-box-flex: 1;\n        -ms-flex-positive: 1;\n            flex-grow: 1; }\n  :host .flex {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex; }\n  :host .num {\n    display: inline-block;\n    width: 40px;\n    text-align: center;\n    font-size: 10pt;\n    line-height: 32px;\n    color: #fff; }\n  :host .top-space {\n    margin-top: 4px; }\n", ""]);
+exports.push([module.i, ":host {\n  font-size: 0;\n  position: relative;\n  white-space: nowrap;\n  height: 100%;\n  background: #000;\n  padding: 32px 8px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  box-sizing: border-box; }\n  :host .player-name {\n    color: #fff;\n    font-size: 12pt;\n    text-align: center;\n    height: 32px;\n    line-height: 32px;\n    margin-bottom: 4px;\n    background: url(\"/assets/ui01.png\"); }\n  :host .missiles {\n    overflow: hidden;\n    height: 32px;\n    width: 100%;\n    background: url(\"/assets/ui01.png\");\n    position: relative; }\n    :host .missiles .inner {\n      position: absolute;\n      left: 0;\n      top: 0;\n      height: 100%;\n      width: 100%;\n      transition: -webkit-transform .1s ease;\n      transition: transform .1s ease;\n      transition: transform .1s ease, -webkit-transform .1s ease; }\n      :host .missiles .inner .missile {\n        display: block;\n        color: #fff;\n        line-height: 32px;\n        height: 32px;\n        font-size: 10pt;\n        padding: 0 16px;\n        box-sizing: border-box;\n        width: 100%; }\n  :host .space {\n    -webkit-box-flex: 1;\n        -ms-flex-positive: 1;\n            flex-grow: 1; }\n  :host .ingame-btn {\n    color: #fff;\n    width: 120px;\n    height: 32px;\n    position: relative;\n    background-size: auto 22px;\n    background-repeat: no-repeat;\n    background-position: center;\n    font-size: 12pt;\n    text-align: center;\n    line-height: 32px;\n    letter-spacing: 1px;\n    text-transform: uppercase; }\n    :host .ingame-btn.small {\n      width: 48px; }\n  :host .grow {\n    -webkit-box-flex: 1;\n        -ms-flex-positive: 1;\n            flex-grow: 1; }\n  :host .flex {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex; }\n  :host .num {\n    display: inline-block;\n    width: 40px;\n    text-align: center;\n    font-size: 10pt;\n    line-height: 32px;\n    color: #fff; }\n  :host .top-space {\n    margin-top: 4px; }\n", ""]);
 
 // exports
 
@@ -291,12 +300,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var GameComponent = (function () {
     function GameComponent(el) {
         this.el = el;
+        this.gameOver = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* EventEmitter */]();
     }
     GameComponent.prototype.ngOnInit = function () {
+        var _this = this;
         var canvas = this.el.nativeElement.getElementsByTagName('canvas')[0];
         this.game = new __WEBPACK_IMPORTED_MODULE_1__game__["a" /* Game */](canvas);
-        this.game.start();
+        this.game.start(this.settings);
+        this.game.gameOver
+            .subscribe(function () { return _this.gameOver.emit(_this.game); });
     };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["z" /* Input */])(),
+        __metadata("design:type", Object)
+    ], GameComponent.prototype, "settings", void 0);
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["K" /* Output */])(),
+        __metadata("design:type", Object)
+    ], GameComponent.prototype, "gameOver", void 0);
     GameComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'app-game',
@@ -376,29 +397,33 @@ var GameModule = (function () {
 
 var Game = (function () {
     function Game(canvas) {
-        var _this = this;
         this.canvas = canvas;
         this.players = [];
         this.missiles = [];
+        this.hasFinished = false;
+        this.gameOverSubject = new __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__["a" /* Subject */]();
+        this.gameOver = this.gameOverSubject.asObservable();
         this.playerChangeSubject = new __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__["a" /* Subject */]();
         this.playerChange = this.playerChangeSubject.asObservable();
-        this.ctx = this.canvas.getContext('2d');
+        this.ctx = this.canvas.getContext("2d");
         this.audio = new __WEBPACK_IMPORTED_MODULE_4__audio_manager__["a" /* AudioManager */]();
-        this.bg = document.createElement('img');
-        this.bg.src = 'https://i.pinimg.com/736x/f4/85/99/f48599bcbe27682a0f98a2d9838adf40--texture-snow.jpg';
-        this.bg.onload = function () { return _this.start(); };
     }
+    Game.prototype.finish = function (loser) {
+        this.loser = loser;
+        this.gameOverSubject.next(true);
+        this.hasFinished = true;
+    };
     Game.prototype.switchPlayer = function () {
         this.currentPlayer = this.currentPlayer === this.players[0]
             ? this.players[1]
             : this.players[0];
         this.playerChangeSubject.next(this.currentPlayer);
     };
-    Game.prototype.start = function () {
+    Game.prototype.start = function (settings) {
         this.adjustSize();
         this.players = [
-            new __WEBPACK_IMPORTED_MODULE_0__player__["a" /* Player */]('#000', 40, this.landscape, this),
-            new __WEBPACK_IMPORTED_MODULE_0__player__["a" /* Player */]('blue', 400, this.landscape, this)
+            new __WEBPACK_IMPORTED_MODULE_0__player__["a" /* Player */](settings.playerOneName, "#000", 40, this.landscape, this),
+            new __WEBPACK_IMPORTED_MODULE_0__player__["a" /* Player */](settings.playerTwoName, "blue", 400, this.landscape, this)
         ];
         this.switchPlayer();
         this.paint();
@@ -406,15 +431,20 @@ var Game = (function () {
     };
     Game.prototype.launch = function (missile) {
         this.missiles.push(missile);
+        return missile.collision;
     };
     Game.prototype.update = function () {
         var _this = this;
+        if (this.hasFinished)
+            return;
         this.missiles.forEach(function (m) { return m.update(_this.landscape); });
         this.players.forEach(function (p) { return p.update(); });
         setTimeout(this.update.bind(this), 20);
     };
     Game.prototype.paint = function () {
         var _this = this;
+        if (this.hasFinished)
+            return;
         this.landscape.paint(this.ctx);
         this.missiles.forEach(function (m) { return m.paint(_this.ctx); });
         this.players.forEach(function (p) { return p.paint(_this.ctx); });
@@ -424,7 +454,7 @@ var Game = (function () {
         var rect = this.canvas.getBoundingClientRect();
         this.canvas.width = rect.width;
         this.canvas.height = rect.height;
-        this.landscape = new __WEBPACK_IMPORTED_MODULE_2__landscape__["a" /* Landscape */](Math.random(), new __WEBPACK_IMPORTED_MODULE_3__v2__["a" /* V2 */](rect.width, rect.height), this.bg, this);
+        this.landscape = new __WEBPACK_IMPORTED_MODULE_2__landscape__["a" /* Landscape */](Math.random(), new __WEBPACK_IMPORTED_MODULE_3__v2__["a" /* V2 */](rect.width, rect.height), this);
         // flip the y axis
         this.ctx.transform(1, 0, 0, -1, 0, rect.height);
     };
@@ -449,9 +479,8 @@ var Game = (function () {
 
 
 var Landscape = (function () {
-    function Landscape(seed, dim, background, game) {
+    function Landscape(seed, dim, game) {
         this.seed = seed;
-        this.background = background;
         this.game = game;
         this.resolution = 1;
         this.hills = 8;
@@ -477,8 +506,6 @@ var Landscape = (function () {
             }
         });
         ctx.closePath();
-        // const pat = ctx.createPattern(this.background, 'repeat');
-        // ctx.fillStyle = pat;
         ctx.fillStyle = '#fff';
         ctx.fill();
     };
@@ -551,6 +578,83 @@ var Landscape = (function () {
 
 /***/ }),
 
+/***/ "../../../../../src/app/game/missiles/hornet-missile.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HornetMissile; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__missile__ = __webpack_require__("../../../../../src/app/game/missiles/missile.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__v2__ = __webpack_require__("../../../../../src/app/game/v2.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_observable_forkJoin__ = __webpack_require__("../../../../rxjs/_esm5/add/observable/forkJoin.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_first__ = __webpack_require__("../../../../rxjs/_esm5/add/operator/first.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_Observable__ = __webpack_require__("../../../../rxjs/_esm5/Observable.js");
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+
+
+
+
+var HornetMissile = (function (_super) {
+    __extends(HornetMissile, _super);
+    function HornetMissile(_a) {
+        var pos = _a.pos, vel = _a.vel, game = _a.game;
+        var _this = _super.call(this, pos, vel, 3, 2, '#000') || this;
+        _this.game = game;
+        _this.highPoint
+            .subscribe(function (p) {
+            _this.collided = true;
+            __WEBPACK_IMPORTED_MODULE_4_rxjs_Observable__["a" /* Observable */].forkJoin(_this.launchMissile(), _this.launchMissile(), _this.launchMissile(), _this.launchMissile(), _this.launchMissile(), _this.launchMissile(), _this.launchMissile(), _this.launchMissile(), _this.launchMissile(), _this.launchMissile(), _this.launchMissile()).subscribe(function () { return _this.done(); });
+        });
+        return _this;
+    }
+    HornetMissile.prototype.launchMissile = function () {
+        return this.game.launch(new TinyTracer({
+            pos: this.pos.add(new __WEBPACK_IMPORTED_MODULE_1__v2__["a" /* V2 */](Math.random() * 4 - 2, Math.random() * 4 - 2)),
+            vel: this.vel.add(new __WEBPACK_IMPORTED_MODULE_1__v2__["a" /* V2 */](Math.random() * 4 - 2, Math.random() * 4 - 2)),
+            game: this.game
+        }));
+    };
+    return HornetMissile;
+}(__WEBPACK_IMPORTED_MODULE_0__missile__["a" /* Missile */]));
+
+var TinyTracer = (function (_super) {
+    __extends(TinyTracer, _super);
+    function TinyTracer(_a) {
+        var pos = _a.pos, vel = _a.vel, game = _a.game;
+        var _this = _super.call(this, pos, vel, 4, 1, '#ff0000') || this;
+        _this.game = game;
+        return _this;
+    }
+    TinyTracer.prototype.update = function (landscape) {
+        var _this = this;
+        var closestPlayer = this.game.players
+            .filter(function (p) { return p !== _this.game.currentPlayer; })
+            .reduce(function (current, player) {
+            if (!current)
+                return player;
+            return player.pos.dist(_this.pos) <= current.pos.dist(_this.pos)
+                ? player
+                : current;
+        }, void 0);
+        this.vel = this.vel.dot(new __WEBPACK_IMPORTED_MODULE_1__v2__["a" /* V2 */](.98, .98));
+        this.force = this.pos.pointTo(closestPlayer.pos, .2);
+        _super.prototype.update.call(this, landscape);
+    };
+    return TinyTracer;
+}(__WEBPACK_IMPORTED_MODULE_0__missile__["a" /* Missile */]));
+
+
+/***/ }),
+
 /***/ "../../../../../src/app/game/missiles/large-bomb-missile.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -573,21 +677,6 @@ var LargeBombMissile = (function (_super) {
     function LargeBombMissile(_a) {
         var pos = _a.pos, vel = _a.vel, game = _a.game;
         return _super.call(this, pos, vel, 28, 2, '#aa2222') || this;
-        // this.collision
-        //   .subscribe(p => {
-        //     game.launch(new SmallMissile({
-        //       pos: p,
-        //       vel: new V2(Math.random() * 4, 4)
-        //     }));
-        //     game.launch(new SmallMissile({
-        //       pos: p,
-        //       vel: new V2(Math.random() * 4, 4)
-        //     }));
-        //     game.launch(new SmallMissile({
-        //       pos: p,
-        //       vel: new V2(Math.random() * 4, 4)
-        //     }));
-        //   });
     }
     return LargeBombMissile;
 }(__WEBPACK_IMPORTED_MODULE_0__missile__["a" /* Missile */]));
@@ -613,8 +702,8 @@ var Missile = (function () {
         this.radius = radius;
         this.color = color;
         this.collided = false;
-        this.force = new __WEBPACK_IMPORTED_MODULE_0__v2__["a" /* V2 */](0, -.03);
         this.reachedHighPoint = false;
+        this.force = new __WEBPACK_IMPORTED_MODULE_0__v2__["a" /* V2 */](0, -.03);
         this.collisionSubject = new __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__["a" /* Subject */]();
         this.collision = this.collisionSubject.asObservable();
         this.highPointSubject = new __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__["a" /* Subject */]();
@@ -639,16 +728,34 @@ var Missile = (function () {
         ctx.globalAlpha = 1;
     };
     Missile.prototype.update = function (landscape) {
-        if (this.collided)
-            return;
-        if (landscape.collide(this)) {
-            this.collisionSubject.next(this.pos);
+        if (this.pos.x <= 0 || this.pos.x >= landscape.dim.x) {
             this.collided = true;
-            this.impact = new Impact(this.power);
+            this.collisionSubject.next(this.pos);
+            this.done();
             return;
         }
+        if (this.collide(landscape))
+            return;
         this.vel = this.vel.add(this.force);
         this.pos = this.pos.add(this.vel);
+        this.checkHighPoint();
+    };
+    Missile.prototype.collide = function (landscape) {
+        if (this.collided)
+            return true;
+        if (landscape.collide(this)) {
+            this.collided = true;
+            this.collisionSubject.next(this.pos);
+            this.done();
+            this.impact = new Impact(this.power);
+            return true;
+        }
+        return false;
+    };
+    Missile.prototype.done = function () {
+        this.collisionSubject.complete();
+    };
+    Missile.prototype.checkHighPoint = function () {
         if (!this.reachedHighPoint && this.vel.y <= 0) {
             this.highPointSubject.next(this.pos);
             this.reachedHighPoint = true;
@@ -674,16 +781,6 @@ var Impact = (function () {
         ctx.fillStyle = grd;
         ctx.closePath();
         ctx.fill();
-        // ctx.beginPath();
-        // ctx.arc(pos.x, pos.y, this.state * this.state * .02, 0, Math.PI * 2);
-        // ctx.fillStyle = '#ff8800';
-        // ctx.closePath();
-        // ctx.fill();
-        // ctx.beginPath();
-        // ctx.arc(pos.x, pos.y, this.state * this.state * .01, 0, Math.PI * 2);
-        // ctx.fillStyle = '#ffff00';
-        // ctx.closePath();
-        // ctx.fill();
         this.state++;
     };
     return Impact;
@@ -730,6 +827,9 @@ var SmallMissile = (function (_super) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__missile__ = __webpack_require__("../../../../../src/app/game/missiles/missile.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__v2__ = __webpack_require__("../../../../../src/app/game/v2.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__small_missile__ = __webpack_require__("../../../../../src/app/game/missiles/small-missile.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_observable_forkJoin__ = __webpack_require__("../../../../rxjs/_esm5/add/observable/forkJoin.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_first__ = __webpack_require__("../../../../rxjs/_esm5/add/operator/first.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_Observable__ = __webpack_require__("../../../../rxjs/_esm5/Observable.js");
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -743,42 +843,131 @@ var __extends = (this && this.__extends) || (function () {
 
 
 
+
+
+
 var SpreadMissile = (function (_super) {
     __extends(SpreadMissile, _super);
     function SpreadMissile(_a) {
         var pos = _a.pos, vel = _a.vel, game = _a.game;
         var _this = _super.call(this, pos, vel, 3, 2, '#000') || this;
+        _this.game = game;
         _this.highPoint
             .subscribe(function (p) {
             _this.collided = true;
-            game.launch(new __WEBPACK_IMPORTED_MODULE_2__small_missile__["a" /* SmallMissile */]({
-                pos: p,
-                vel: _this.vel.add(new __WEBPACK_IMPORTED_MODULE_1__v2__["a" /* V2 */](Math.random() * 2 - 1, Math.random() * 2 - 1))
-            }));
-            game.launch(new __WEBPACK_IMPORTED_MODULE_2__small_missile__["a" /* SmallMissile */]({
-                pos: p,
-                vel: _this.vel.add(new __WEBPACK_IMPORTED_MODULE_1__v2__["a" /* V2 */](Math.random() * 2 - 1, Math.random() * 2 - 1))
-            }));
-            game.launch(new __WEBPACK_IMPORTED_MODULE_2__small_missile__["a" /* SmallMissile */]({
-                pos: p,
-                vel: _this.vel.add(new __WEBPACK_IMPORTED_MODULE_1__v2__["a" /* V2 */](Math.random() * 2 - 1, Math.random() * 2 - 1))
-            }));
-            game.launch(new __WEBPACK_IMPORTED_MODULE_2__small_missile__["a" /* SmallMissile */]({
-                pos: p,
-                vel: _this.vel.add(new __WEBPACK_IMPORTED_MODULE_1__v2__["a" /* V2 */](Math.random() * 2 - 1, Math.random() * 2 - 1))
-            }));
-            game.launch(new __WEBPACK_IMPORTED_MODULE_2__small_missile__["a" /* SmallMissile */]({
-                pos: p,
-                vel: _this.vel.add(new __WEBPACK_IMPORTED_MODULE_1__v2__["a" /* V2 */](Math.random() * 2 - 1, Math.random() * 2 - 1))
-            }));
-            game.launch(new __WEBPACK_IMPORTED_MODULE_2__small_missile__["a" /* SmallMissile */]({
-                pos: p,
-                vel: _this.vel.add(new __WEBPACK_IMPORTED_MODULE_1__v2__["a" /* V2 */](Math.random() * 2 - 1, Math.random() * 2 - 1))
-            }));
+            __WEBPACK_IMPORTED_MODULE_5_rxjs_Observable__["a" /* Observable */].forkJoin(_this.launchMissile(), _this.launchMissile(), _this.launchMissile(), _this.launchMissile(), _this.launchMissile(), _this.launchMissile()).subscribe(function () { return _this.done(); });
         });
         return _this;
     }
+    SpreadMissile.prototype.launchMissile = function () {
+        return this.game.launch(new __WEBPACK_IMPORTED_MODULE_2__small_missile__["a" /* SmallMissile */]({
+            pos: this.pos,
+            vel: this.vel.add(new __WEBPACK_IMPORTED_MODULE_1__v2__["a" /* V2 */](Math.random() * 4 - 2, Math.random() * 4 - 2))
+        }));
+    };
     return SpreadMissile;
+}(__WEBPACK_IMPORTED_MODULE_0__missile__["a" /* Missile */]));
+
+
+
+/***/ }),
+
+/***/ "../../../../../src/app/game/missiles/tracer-missile.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TracerMissile; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__missile__ = __webpack_require__("../../../../../src/app/game/missiles/missile.ts");
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+var TracerMissile = (function (_super) {
+    __extends(TracerMissile, _super);
+    function TracerMissile(_a) {
+        var pos = _a.pos, vel = _a.vel, game = _a.game;
+        var _this = _super.call(this, pos, vel, 18, 2, '#000') || this;
+        _this.game = game;
+        return _this;
+    }
+    TracerMissile.prototype.update = function (landscape) {
+        var _this = this;
+        if (this.reachedHighPoint) {
+            var closestPlayer = this.game.players
+                .filter(function (p) { return p !== _this.game.currentPlayer; })
+                .reduce(function (current, player) {
+                if (!current)
+                    return player;
+                return player.pos.dist(_this.pos) <= current.pos.dist(_this.pos)
+                    ? player
+                    : current;
+            }, void 0);
+            this.force = this.pos.pointTo(closestPlayer.pos, .2);
+        }
+        _super.prototype.update.call(this, landscape);
+    };
+    return TracerMissile;
+}(__WEBPACK_IMPORTED_MODULE_0__missile__["a" /* Missile */]));
+
+
+
+/***/ }),
+
+/***/ "../../../../../src/app/game/missiles/twister-missile.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TwisterMissile; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__missile__ = __webpack_require__("../../../../../src/app/game/missiles/missile.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__v2__ = __webpack_require__("../../../../../src/app/game/v2.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__small_missile__ = __webpack_require__("../../../../../src/app/game/missiles/small-missile.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_observable_forkJoin__ = __webpack_require__("../../../../rxjs/_esm5/add/observable/forkJoin.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_first__ = __webpack_require__("../../../../rxjs/_esm5/add/operator/first.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_Observable__ = __webpack_require__("../../../../rxjs/_esm5/Observable.js");
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+
+
+
+
+
+var TwisterMissile = (function (_super) {
+    __extends(TwisterMissile, _super);
+    function TwisterMissile(_a) {
+        var pos = _a.pos, vel = _a.vel, game = _a.game;
+        var _this = _super.call(this, pos, vel, 3, 2, '#000') || this;
+        _this.game = game;
+        _this.highPoint
+            .subscribe(function (p) {
+            _this.collided = true;
+            var pivot = new __WEBPACK_IMPORTED_MODULE_1__v2__["a" /* V2 */](0, 0);
+            __WEBPACK_IMPORTED_MODULE_5_rxjs_Observable__["a" /* Observable */].forkJoin(_this.launchMissile(pivot.pointTo(new __WEBPACK_IMPORTED_MODULE_1__v2__["a" /* V2 */](0, -1), 4)), _this.launchMissile(pivot.pointTo(new __WEBPACK_IMPORTED_MODULE_1__v2__["a" /* V2 */](1, -1), 4)), _this.launchMissile(pivot.pointTo(new __WEBPACK_IMPORTED_MODULE_1__v2__["a" /* V2 */](1, 0), 4)), _this.launchMissile(pivot.pointTo(new __WEBPACK_IMPORTED_MODULE_1__v2__["a" /* V2 */](-1, 0), 4)), _this.launchMissile(pivot.pointTo(new __WEBPACK_IMPORTED_MODULE_1__v2__["a" /* V2 */](-1, -1), 4))).subscribe(function () { return _this.done(); });
+        });
+        return _this;
+    }
+    TwisterMissile.prototype.launchMissile = function (vel) {
+        return this.game.launch(new __WEBPACK_IMPORTED_MODULE_2__small_missile__["a" /* SmallMissile */]({
+            pos: this.pos,
+            vel: vel
+        }));
+    };
+    return TwisterMissile;
 }(__WEBPACK_IMPORTED_MODULE_0__missile__["a" /* Missile */]));
 
 
@@ -794,12 +983,19 @@ var SpreadMissile = (function (_super) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__missiles_large_bomb_missile__ = __webpack_require__("../../../../../src/app/game/missiles/large-bomb-missile.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__missiles_spread_missile__ = __webpack_require__("../../../../../src/app/game/missiles/spread-missile.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__missiles_small_missile__ = __webpack_require__("../../../../../src/app/game/missiles/small-missile.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__missiles_tracer_missile__ = __webpack_require__("../../../../../src/app/game/missiles/tracer-missile.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__missiles_twister_missile__ = __webpack_require__("../../../../../src/app/game/missiles/twister-missile.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__missiles_hornet_missile__ = __webpack_require__("../../../../../src/app/game/missiles/hornet-missile.ts");
+
+
+
 
 
 
 
 var Player = (function () {
-    function Player(color, xPos, landscape, game) {
+    function Player(name, color, xPos, landscape, game) {
+        this.name = name;
         this.color = color;
         this.landscape = landscape;
         this.game = game;
@@ -810,7 +1006,7 @@ var Player = (function () {
         this.bezelRotationDegrees = 0;
         this.health = 100;
         this.bezelRotation = 1;
-        this.fuel = 120;
+        this.fuel = 160;
         this.activeMissileIndex = 0;
         this.missiles = [
             {
@@ -827,6 +1023,21 @@ var Player = (function () {
                 title: 'Atomic Bomb',
                 count: 4,
                 missile: __WEBPACK_IMPORTED_MODULE_1__missiles_large_bomb_missile__["a" /* LargeBombMissile */]
+            },
+            {
+                title: 'Tracer Rocket',
+                count: 4,
+                missile: __WEBPACK_IMPORTED_MODULE_4__missiles_tracer_missile__["a" /* TracerMissile */]
+            },
+            {
+                title: 'Twister Missile',
+                count: 4,
+                missile: __WEBPACK_IMPORTED_MODULE_5__missiles_twister_missile__["a" /* TwisterMissile */]
+            },
+            {
+                title: 'Hornet Attack',
+                count: 4,
+                missile: __WEBPACK_IMPORTED_MODULE_6__missiles_hornet_missile__["a" /* HornetMissile */]
             }
         ];
         this.height = 4;
@@ -864,22 +1075,28 @@ var Player = (function () {
             return;
         f += power;
         this.health = Math.max(0, this.health - f);
+        if (this.health === 0)
+            this.game.finish(this);
         this.setForce(this.force);
     };
     Player.prototype.launch = function () {
+        var _this = this;
         var rotation = this.vehicleRotation + this.bezelRotation;
         var force = this.force * .04;
         var vel = new __WEBPACK_IMPORTED_MODULE_0__v2__["a" /* V2 */](Math.cos(rotation) * force, Math.sin(rotation) * force);
         var verticalVehicleRotation = this.vehicleRotation + Math.PI / 2;
         this.game.audio.play('missileLaunch');
-        this.game.launch(new (this.missiles[this.activeMissileIndex].missile)({
+        this.game
+            .launch(new (this.missiles[this.activeMissileIndex].missile)({
             pos: this.pos
                 .add(new __WEBPACK_IMPORTED_MODULE_0__v2__["a" /* V2 */](Math.cos(verticalVehicleRotation) * this.bezelOffset, Math.sin(verticalVehicleRotation) * this.bezelOffset))
                 .add(new __WEBPACK_IMPORTED_MODULE_0__v2__["a" /* V2 */](Math.cos(rotation) * this.bezelLength, Math.sin(rotation) * this.bezelLength)),
             vel: vel,
             game: this.game,
-        }));
-        this.game.switchPlayer();
+        }))
+            .subscribe(void 0, void 0, function () {
+            _this.game.switchPlayer();
+        });
     };
     Player.prototype.paint = function (ctx) {
         ctx.save();
@@ -891,25 +1108,32 @@ var Player = (function () {
         ctx.lineTo(Math.cos(this.bezelRotation) * this.bezelLength, Math.sin(this.bezelRotation) * this.bezelLength + this.bezelOffset);
         ctx.closePath();
         ctx.lineWidth = 2;
-        ctx.strokeStyle = '#000800';
+        ctx.strokeStyle = this.color;
         ctx.stroke();
         ctx.beginPath();
         ctx.moveTo(Math.cos(this.bezelRotation) * (this.bezelLength - 2), Math.sin(this.bezelRotation) * (this.bezelLength - 2) + this.bezelOffset);
         ctx.lineTo(Math.cos(this.bezelRotation) * this.bezelLength, Math.sin(this.bezelRotation) * this.bezelLength + this.bezelOffset);
         ctx.closePath();
         ctx.lineWidth = 2.5;
-        ctx.strokeStyle = '#001000';
+        ctx.strokeStyle = this.color;
         ctx.stroke();
         // torso
         ctx.beginPath();
         ctx.moveTo(-this.dim.x / 2, 2);
+        ctx.lineTo(-this.dim.x / 2 + 4, 2);
+        ctx.lineTo(-this.dim.x / 2 + 4, 0);
+        ctx.lineTo(this.dim.x / 2 - 4, 0);
+        ctx.lineTo(this.dim.x / 2 - 4, 2);
         ctx.lineTo(this.dim.x / 2, 2);
         ctx.lineTo(this.dim.x / 2 - 2, this.height + 2);
+        ctx.lineTo(this.dim.x / 2 - 6, this.height + 2);
+        ctx.lineTo(this.dim.x / 2 - 6, this.height + 5);
+        ctx.lineTo(-this.dim.x / 2 + 6, this.height + 5);
+        ctx.lineTo(-this.dim.x / 2 + 6, this.height + 2);
         ctx.lineTo(-this.dim.x / 2 + 2, this.height + 2);
-        ctx.fillStyle = '#002000';
+        ctx.fillStyle = this.color;
         ctx.fill();
         ctx.closePath();
-        ctx.fillRect(-4, 4, 8, 5);
         // wheels
         ctx.arc(-5, 2, 3, 0, Math.PI * 2);
         ctx.arc(5, 2, 3, 0, Math.PI * 2);
@@ -927,7 +1151,7 @@ var Player = (function () {
 /***/ "../../../../../src/app/game/slider/slider.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div (touchmove)=\"change($event)\" class=\"wrapper\">\n  <div class=\"shape\">\n    <div [style.height]=\"game.currentPlayer.health + '%'\" class=\"health\"></div>\n    <div [style.height]=\"game.currentPlayer.force + '%'\" class=\"indicator\"></div>\n  </div>\n</div>\n"
+module.exports = "<div (touchmove)=\"change($event)\" (touchstart)=\"change($event)\" class=\"wrapper\">\n  <div class=\"shape\">\n    <div [style.height]=\"game.currentPlayer.health + '%'\" class=\"health\"></div>\n    <div [style.height]=\"game.currentPlayer.force + '%'\" class=\"indicator\"></div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1022,6 +1246,16 @@ var V2 = (function () {
         var y = Math.abs(this.y - v2.y);
         return Math.sqrt(x * x + y * y);
     };
+    V2.prototype.pointTo = function (v2, radius) {
+        var phi = Math.atan2(v2.y - this.y, v2.x - this.x);
+        return new V2(Math.cos(phi) * radius, Math.sin(phi) * radius);
+    };
+    V2.prototype.dot = function (v2) {
+        return new V2(this.x * v2.x, this.y * v2.y);
+    };
+    V2.prototype.div = function (v2) {
+        return new V2(this.x / v2.x, this.y / v2.y);
+    };
     return V2;
 }());
 
@@ -1032,7 +1266,7 @@ var V2 = (function () {
 /***/ "../../../../../src/app/menu/menu.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h1>Arms Race</h1>\n<section name=\"fullscreen\">\n    <button class=\"btn fullscreen-btn\">Play in Fullscreen</button>\n</section>\n<section name=\"choose-player1\">\n    <input type=\"text\" id=\"player1-name\" placeholder=\"Player 1 Name\"><br>\n    <button class=\"btn toplayer2-btn\">Set Player 2</button>\n</section>\n<section name=\"choose-player2\">\n    <input type=\"text\" id=\"player1-name\" placeholder=\"Player 2 Name\"><br>\n    <button class=\"btn start-btn\">Start Game!</button>\n</section>\n<img style=\"display: none;\" src=\"https://i.pinimg.com/736x/f4/85/99/f48599bcbe27682a0f98a2d9838adf40--texture-snow.jpg\" id=\"bg\" alt=\"\">\n"
+module.exports = "<h1>Arms Race</h1>\n<section *ngIf=\"view === 'main'\" name=\"fullscreen\">\n  <div>\n      <div (click)=\"view = 'singleplayer'\" class=\"btn\">Singleplayer</div>\n  </div>\n  <div>\n      <div (click)=\"view = 'multiplayer'\" class=\"btn\">Multiplayer</div>\n  </div>\n</section>\n<section *ngIf=\"view === 'singleplayer'\">\n  <span>coming soon...</span>\n</section>\n<section *ngIf=\"view === 'gameover'\">\n  <h2>Game Over</h2>\n  <div>\n      <div (click)=\"view = 'main'\" class=\"btn\">Back</div>\n  </div>\n</section>\n<section *ngIf=\"view === 'multiplayer'\">\n  <div>\n    <input type=\"text\" [(ngModel)]=\"settings.playerOneName\" placeholder=\"Player One Name\">\n  </div>\n  <div>\n    <input type=\"text\" [(ngModel)]=\"settings.playerTwoName\" placeholder=\"Player Two Name\">\n  </div>\n  <div>\n    <div (click)=\"startGame.emit(settings)\" class=\"btn\">Start Game</div>\n  </div>\n</section>\n"
 
 /***/ }),
 
@@ -1044,7 +1278,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ":host {\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  background-size: cover;\n  color: rgba(0, 0, 0, 0.8);\n  text-align: center;\n  background: #fff; }\n  :host h1 {\n    text-align: center;\n    margin: 0;\n    padding: 0 0 24px;\n    font-size: 20pt;\n    line-height: 48px;\n    height: 48px;\n    letter-spacing: 2px;\n    color: #311B92; }\n  :host .btn {\n    display: inline-block;\n    padding: 0 16px;\n    border: 1px solid rgba(0, 0, 0, 0.1);\n    line-height: 42px;\n    color: #fff;\n    text-transform: uppercase;\n    height: 42px;\n    letter-spacing: 1px;\n    width: 220px;\n    box-sizing: border-box; }\n  :host input {\n    display: inline-block;\n    background: rgba(255, 255, 255, 0.8);\n    border: 2px solid black;\n    height: 42px;\n    line-height: 42px;\n    text-align: center;\n    font-size: 16pt;\n    color: rgba(0, 0, 0, 0.8);\n    width: 220px;\n    margin-bottom: 16px;\n    box-sizing: border-box; }\n", ""]);
+exports.push([module.i, ":host {\n  position: absolute;\n  left: 0;\n  color: #fff;\n  top: 0;\n  z-index: 1;\n  width: 100vw;\n  height: 100vh;\n  background-size: cover;\n  color: rgba(0, 0, 0, 0.8);\n  text-align: center;\n  background: #000; }\n  :host.hide {\n    -webkit-transform: translate(0, -100%);\n            transform: translate(0, -100%); }\n  :host h1 {\n    text-align: center;\n    margin: 0;\n    padding: 0 0 24px;\n    font-size: 28pt;\n    line-height: 48px;\n    height: 48px;\n    letter-spacing: 2px;\n    color: #ffaa11; }\n  :host .btn {\n    margin: 8px;\n    display: inline-block;\n    padding: 0 16px;\n    border: 1px solid white;\n    line-height: 40px;\n    color: #fff;\n    text-transform: uppercase;\n    height: 42px;\n    letter-spacing: 2px;\n    width: 220px;\n    box-sizing: border-box; }\n  :host input {\n    display: inline-block;\n    background: rgba(255, 255, 255, 0.1);\n    border: 1px solid white;\n    height: 42px;\n    line-height: 42px;\n    text-align: center;\n    font-size: 16pt;\n    color: #fff;\n    width: 220px;\n    margin-bottom: 16px;\n    box-sizing: border-box; }\n", ""]);
 
 // exports
 
@@ -1072,9 +1306,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var MenuComponent = (function () {
     function MenuComponent() {
+        this.startGame = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* EventEmitter */]();
+        this.settings = {};
     }
-    MenuComponent.prototype.ngOnInit = function () {
-    };
+    MenuComponent.prototype.ngOnInit = function () { };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["K" /* Output */])(),
+        __metadata("design:type", Object)
+    ], MenuComponent.prototype, "startGame", void 0);
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["z" /* Input */])(),
+        __metadata("design:type", String)
+    ], MenuComponent.prototype, "view", void 0);
     MenuComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'app-menu',
@@ -1098,6 +1341,7 @@ var MenuComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("../../../common/esm5/common.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__menu_component__ = __webpack_require__("../../../../../src/app/menu/menu.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__("../../../forms/esm5/forms.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1107,13 +1351,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
 var MenuModule = (function () {
     function MenuModule() {
     }
     MenuModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* NgModule */])({
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1__angular_common__["a" /* CommonModule */]
+                __WEBPACK_IMPORTED_MODULE_1__angular_common__["a" /* CommonModule */],
+                __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormsModule */]
             ],
             exports: [
                 __WEBPACK_IMPORTED_MODULE_2__menu_component__["a" /* MenuComponent */]
@@ -1160,7 +1406,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 if (__WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].production) {
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_5" /* enableProdMode */])();
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_7" /* enableProdMode */])();
 }
 window.oncontextmenu = function (event) {
     event.preventDefault();
