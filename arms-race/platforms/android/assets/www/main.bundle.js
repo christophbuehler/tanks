@@ -169,7 +169,7 @@ var AudioManager = (function () {
 /***/ "../../../../../src/app/game/controls.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"player-name\">{{game.currentPlayer.name}}</div>\r\n<div class=\"missiles\">\r\n  <div [style.transform]=\"'translate(0, ' + (-game.currentPlayer.activeMissileIndex * 100) + '%)'\"\r\n    (touchstart)=\"switchMissile()\" class=\"inner\">\r\n    <div *ngFor=\"let missile of game.currentPlayer.missiles\" class=\"missile grow\">\r\n      <span>{{missile.title}}</span>\r\n      <span>{{missile.count}}</span>\r\n    </div>\r\n  </div>\r\n</div>\r\n<app-slider [game]=\"game\"></app-slider>\r\n<div>\r\n  <div class=\"flex\">\r\n    <div (touchstart)=\"rotate(true, false)\" (touchend)=\"rotate(true, true)\" class=\"ingame-btn small\" style=\"background-image: url('assets/arrow-left-rot.png')\"></div>\r\n    <span class=\"num grow\">{{toInt(game.currentPlayer.bezelRotationDegrees)}}</span>\r\n    <div (touchstart)=\"rotate(false, false)\" (touchend)=\"rotate(false, true)\" class=\"ingame-btn small\" style=\"background-image: url('assets/arrow-right-rot.png')\"></div>\r\n  </div>\r\n  <div class=\"flex top-space\">\r\n    <div (touchstart)=\"move(true, false)\" (touchend)=\"move(true, true)\" class=\"ingame-btn small\" style=\"background-image: url('assets/arrow-left.png')\"></div>\r\n    <span class=\"num grow\">{{toInt(game.currentPlayer.fuel)}} m</span>\r\n    <div (touchstart)=\"move(false, false)\" (touchend)=\"move(false, true)\" class=\"ingame-btn small\" style=\"background-image: url('assets/arrow-right.png')\"></div>\r\n  </div>\r\n</div>\r\n<div class=\"flex\">\r\n  <div (click)=\"fire()\" class=\"ingame-btn top-space grow\">FIRE</div>\r\n</div>\r\n"
+module.exports = "<div class=\"player-name\">{{game.currentPlayer.name}}</div>\r\n<div class=\"missiles\">\r\n  <div [style.transform]=\"'translate(0, ' + (-game.currentPlayer.activeMissileIndex * 100) + '%)'\"\r\n    (touchstart)=\"switchMissile()\" class=\"inner\">\r\n    <div *ngFor=\"let missile of game.currentPlayer.missiles\" class=\"missile grow\">\r\n      <span>{{missile.title}}</span>\r\n      <span>{{missile.count}}</span>\r\n    </div>\r\n  </div>\r\n</div>\r\n<app-slider [game]=\"game\"></app-slider>\r\n<div>\r\n  <div class=\"flex\">\r\n    <div (touchstart)=\"rotate(true, false)\" (touchend)=\"rotate(true, true)\" class=\"ingame-btn small\" style=\"background-image: url('assets/arrow-left-rot.png')\"></div>\r\n    <span class=\"num grow\">{{toInt(game.currentPlayer.bezelRotationDegrees)}} &deg;</span>\r\n    <div (touchstart)=\"rotate(false, false)\" (touchend)=\"rotate(false, true)\" class=\"ingame-btn small\" style=\"background-image: url('assets/arrow-right-rot.png')\"></div>\r\n  </div>\r\n  <div class=\"flex top-space\">\r\n    <div (touchstart)=\"move(true, false)\" (touchend)=\"move(true, true)\" class=\"ingame-btn small\" style=\"background-image: url('assets/arrow-left.png')\"></div>\r\n    <span class=\"num grow\">{{toInt(game.currentPlayer.fuel)}} m</span>\r\n    <div (touchstart)=\"move(false, false)\" (touchend)=\"move(false, true)\" class=\"ingame-btn small\" style=\"background-image: url('assets/arrow-right.png')\"></div>\r\n  </div>\r\n</div>\r\n<div class=\"flex\">\r\n  <div (click)=\"fire()\" class=\"ingame-btn fire-btn top-space grow\">FIRE</div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -181,7 +181,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ":host {\n  font-size: 0;\n  position: relative;\n  white-space: nowrap;\n  height: 100%;\n  background: #000;\n  padding: 32px 8px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  box-sizing: border-box; }\n  :host .player-name {\n    color: #fff;\n    font-size: 12pt;\n    text-align: center;\n    height: 32px;\n    line-height: 32px;\n    margin-bottom: 4px;\n    background: url(\"/assets/ui01.png\"); }\n  :host .missiles {\n    overflow: hidden;\n    height: 32px;\n    width: 100%;\n    background: url(\"/assets/ui01.png\");\n    position: relative; }\n    :host .missiles .inner {\n      position: absolute;\n      left: 0;\n      top: 0;\n      height: 100%;\n      width: 100%;\n      transition: -webkit-transform .1s ease;\n      transition: transform .1s ease;\n      transition: transform .1s ease, -webkit-transform .1s ease; }\n      :host .missiles .inner .missile {\n        display: block;\n        color: #fff;\n        line-height: 32px;\n        height: 32px;\n        font-size: 10pt;\n        padding: 0 16px;\n        box-sizing: border-box;\n        width: 100%; }\n  :host .space {\n    -webkit-box-flex: 1;\n        -ms-flex-positive: 1;\n            flex-grow: 1; }\n  :host .ingame-btn {\n    color: #fff;\n    width: 120px;\n    height: 32px;\n    position: relative;\n    background-size: auto 22px;\n    background-repeat: no-repeat;\n    background-position: center;\n    font-size: 12pt;\n    text-align: center;\n    line-height: 32px;\n    letter-spacing: 1px;\n    text-transform: uppercase; }\n    :host .ingame-btn.small {\n      width: 48px; }\n  :host .grow {\n    -webkit-box-flex: 1;\n        -ms-flex-positive: 1;\n            flex-grow: 1; }\n  :host .flex {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex; }\n  :host .num {\n    display: inline-block;\n    width: 40px;\n    text-align: center;\n    font-size: 10pt;\n    line-height: 32px;\n    color: #fff; }\n  :host .top-space {\n    margin-top: 4px; }\n", ""]);
+exports.push([module.i, ":host {\n  font-size: 0;\n  position: relative;\n  white-space: nowrap;\n  height: 100%;\n  background: #000;\n  padding: 32px 8px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  box-sizing: border-box; }\n  :host .player-name {\n    color: #fff;\n    font-size: 12pt;\n    text-align: center;\n    height: 32px;\n    line-height: 32px;\n    margin-bottom: 4px; }\n  :host .missiles {\n    overflow: hidden;\n    height: 32px;\n    width: 100%;\n    position: relative; }\n    :host .missiles .inner {\n      position: absolute;\n      left: 0;\n      top: 0;\n      height: 100%;\n      width: 100%;\n      transition: -webkit-transform .1s ease;\n      transition: transform .1s ease;\n      transition: transform .1s ease, -webkit-transform .1s ease; }\n      :host .missiles .inner .missile {\n        display: block;\n        color: #fff;\n        line-height: 32px;\n        height: 32px;\n        font-size: 10pt;\n        padding: 0 16px;\n        box-sizing: border-box;\n        width: 100%; }\n  :host .space {\n    -webkit-box-flex: 1;\n        -ms-flex-positive: 1;\n            flex-grow: 1; }\n  :host .ingame-btn {\n    color: #fff;\n    width: 120px;\n    height: 32px;\n    position: relative;\n    background-size: auto 22px;\n    background-repeat: no-repeat;\n    background-position: center;\n    font-size: 12pt;\n    text-align: center;\n    line-height: 32px;\n    letter-spacing: 1px;\n    text-transform: uppercase; }\n    :host .ingame-btn.small {\n      width: 48px; }\n  :host .grow {\n    -webkit-box-flex: 1;\n        -ms-flex-positive: 1;\n            flex-grow: 1; }\n  :host .flex {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex; }\n  :host .num {\n    display: inline-block;\n    width: 40px;\n    text-align: center;\n    font-size: 10pt;\n    line-height: 32px;\n    color: #fff; }\n  :host .top-space {\n    margin-top: 4px; }\n  :host .fire-btn {\n    border: 1px solid rgba(255, 255, 255, 0.2);\n    background: rgba(255, 10, 10, 0.4); }\n", ""]);
 
 // exports
 
@@ -211,7 +211,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var ControlsComponent = (function () {
     function ControlsComponent() {
-        this.speed = .2;
+        this.speed = .4;
     }
     ControlsComponent.prototype.ngOnInit = function () {
     };
@@ -390,6 +390,8 @@ var GameModule = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__landscape__ = __webpack_require__("../../../../../src/app/game/landscape.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__v2__ = __webpack_require__("../../../../../src/app/game/v2.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__audio_manager__ = __webpack_require__("../../../../../src/app/game/audio-manager.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__package__ = __webpack_require__("../../../../../src/app/game/package.ts");
+
 
 
 
@@ -400,12 +402,13 @@ var Game = (function () {
         this.canvas = canvas;
         this.players = [];
         this.missiles = [];
+        this.packages = [];
         this.hasFinished = false;
         this.gameOverSubject = new __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__["a" /* Subject */]();
         this.gameOver = this.gameOverSubject.asObservable();
         this.playerChangeSubject = new __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__["a" /* Subject */]();
         this.playerChange = this.playerChangeSubject.asObservable();
-        this.ctx = this.canvas.getContext("2d");
+        this.ctx = this.canvas.getContext('2d');
         this.audio = new __WEBPACK_IMPORTED_MODULE_4__audio_manager__["a" /* AudioManager */]();
     }
     Game.prototype.finish = function (loser) {
@@ -417,9 +420,13 @@ var Game = (function () {
         this.currentPlayer = this.currentPlayer === this.players[0]
             ? this.players[1]
             : this.players[0];
+        this.currentPlayer.launched = false;
         this.playerChangeSubject.next(this.currentPlayer);
+        if (this.packages.length === 0 && Math.random() > .8)
+            this.packages.push(new __WEBPACK_IMPORTED_MODULE_5__package__["a" /* Package */](this.landscape));
     };
     Game.prototype.start = function (settings) {
+        this.startTime = (new Date()).getTime();
         this.adjustSize();
         this.players = [
             new __WEBPACK_IMPORTED_MODULE_0__player__["a" /* Player */](settings.playerOneName, "#000", 40, this.landscape, this),
@@ -439,15 +446,21 @@ var Game = (function () {
             return;
         this.missiles.forEach(function (m) { return m.update(_this.landscape); });
         this.players.forEach(function (p) { return p.update(); });
+        this.packages.forEach(function (p) { return p.update(_this.players); });
         setTimeout(this.update.bind(this), 20);
     };
     Game.prototype.paint = function () {
         var _this = this;
         if (this.hasFinished)
             return;
+        var conf = {
+            ctx: this.ctx,
+            gameTime: (new Date()).getTime() - this.startTime
+        };
         this.landscape.paint(this.ctx);
         this.missiles.forEach(function (m) { return m.paint(_this.ctx); });
         this.players.forEach(function (p) { return p.paint(_this.ctx); });
+        this.packages.forEach(function (p) { return p.paint(conf); });
         window.requestAnimationFrame(this.paint.bind(this));
     };
     Game.prototype.adjustSize = function () {
@@ -488,6 +501,7 @@ var Landscape = (function () {
         this.maxHeight = 260;
         this.minHillDist = 20;
         this.maxHillDist = 120;
+        this.biome = new IceBiome(this);
         var padding = new __WEBPACK_IMPORTED_MODULE_2__v2__["a" /* V2 */](16, 16);
         this.dim = dim.add(padding);
         this.generateVertices(seed);
@@ -506,7 +520,8 @@ var Landscape = (function () {
             }
         });
         ctx.closePath();
-        ctx.fillStyle = '#fff';
+        ctx.fillStyle = this.biome.color;
+        this.biome.paint(ctx);
         ctx.fill();
     };
     Landscape.prototype.collide = function (_a) {
@@ -574,6 +589,24 @@ var Landscape = (function () {
     return Landscape;
 }());
 
+var MeadowBiome = (function () {
+    function MeadowBiome(landscape) {
+        this.landscape = landscape;
+        this.color = '#126212';
+    }
+    MeadowBiome.prototype.paint = function (ctx) {
+    };
+    return MeadowBiome;
+}());
+var IceBiome = (function () {
+    function IceBiome(landscape) {
+        this.landscape = landscape;
+        this.color = '#fff';
+    }
+    IceBiome.prototype.paint = function (ctx) {
+    };
+    return IceBiome;
+}());
 
 
 /***/ }),
@@ -630,7 +663,7 @@ var TinyTracer = (function (_super) {
     __extends(TinyTracer, _super);
     function TinyTracer(_a) {
         var pos = _a.pos, vel = _a.vel, game = _a.game;
-        var _this = _super.call(this, pos, vel, 4, 1, '#ff0000') || this;
+        var _this = _super.call(this, pos, vel, 1, 1, '#ff0000') || this;
         _this.game = game;
         return _this;
     }
@@ -920,56 +953,124 @@ var TracerMissile = (function (_super) {
 
 /***/ }),
 
-/***/ "../../../../../src/app/game/missiles/twister-missile.ts":
+/***/ "../../../../../src/app/game/package.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TwisterMissile; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__missile__ = __webpack_require__("../../../../../src/app/game/missiles/missile.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__v2__ = __webpack_require__("../../../../../src/app/game/v2.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__small_missile__ = __webpack_require__("../../../../../src/app/game/missiles/small-missile.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_observable_forkJoin__ = __webpack_require__("../../../../rxjs/_esm5/add/observable/forkJoin.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_first__ = __webpack_require__("../../../../rxjs/_esm5/add/operator/first.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_Observable__ = __webpack_require__("../../../../rxjs/_esm5/Observable.js");
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Package; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__v2__ = __webpack_require__("../../../../../src/app/game/v2.ts");
 
-
-
-
-
-
-var TwisterMissile = (function (_super) {
-    __extends(TwisterMissile, _super);
-    function TwisterMissile(_a) {
-        var pos = _a.pos, vel = _a.vel, game = _a.game;
-        var _this = _super.call(this, pos, vel, 3, 2, '#000') || this;
-        _this.game = game;
-        _this.highPoint
-            .subscribe(function (p) {
-            _this.collided = true;
-            var pivot = new __WEBPACK_IMPORTED_MODULE_1__v2__["a" /* V2 */](0, 0);
-            __WEBPACK_IMPORTED_MODULE_5_rxjs_Observable__["a" /* Observable */].forkJoin(_this.launchMissile(pivot.pointTo(new __WEBPACK_IMPORTED_MODULE_1__v2__["a" /* V2 */](0, -1), 4)), _this.launchMissile(pivot.pointTo(new __WEBPACK_IMPORTED_MODULE_1__v2__["a" /* V2 */](1, -1), 4)), _this.launchMissile(pivot.pointTo(new __WEBPACK_IMPORTED_MODULE_1__v2__["a" /* V2 */](1, 0), 4)), _this.launchMissile(pivot.pointTo(new __WEBPACK_IMPORTED_MODULE_1__v2__["a" /* V2 */](-1, 0), 4)), _this.launchMissile(pivot.pointTo(new __WEBPACK_IMPORTED_MODULE_1__v2__["a" /* V2 */](-1, -1), 4))).subscribe(function () { return _this.done(); });
-        });
-        return _this;
+var Package = (function () {
+    function Package(landscape) {
+        this.landscape = landscape;
+        this.vel = new __WEBPACK_IMPORTED_MODULE_0__v2__["a" /* V2 */](0, -.8);
+        this.landed = false;
+        this.dim = new __WEBPACK_IMPORTED_MODULE_0__v2__["a" /* V2 */](20, 20);
+        this.collider = new RectCollider(this.dim);
+        this.rotation = 0;
+        this.hangingDist = 20;
+        this.radius = 24;
+        this.collected = false;
+        var centerX = landscape.dim.x / 2;
+        this.pos = new __WEBPACK_IMPORTED_MODULE_0__v2__["a" /* V2 */](centerX + centerX * Math.random() * .8 - centerX * .4, landscape.dim.y);
     }
-    TwisterMissile.prototype.launchMissile = function (vel) {
-        return this.game.launch(new __WEBPACK_IMPORTED_MODULE_2__small_missile__["a" /* SmallMissile */]({
-            pos: this.pos,
-            vel: vel
-        }));
+    Package.prototype.update = function (players) {
+        var _this = this;
+        if (this.collected)
+            return;
+        var points = this.collider.getPoints(this.rotation, new __WEBPACK_IMPORTED_MODULE_0__v2__["a" /* V2 */](0, this.hangingDist));
+        var packageCenter = this.pos.add(points[0].add(points[2]).div(new __WEBPACK_IMPORTED_MODULE_0__v2__["a" /* V2 */](2, 2)));
+        if (players.find(function (p) {
+            if (p.pos.dist(packageCenter) > _this.radius)
+                return false;
+            p.health = Math.min(100, p.health + 40);
+            _this.collected = true;
+        }))
+            return;
+        if (this.landed)
+            return;
+        this.pos = this.pos.add(this.vel);
+        this.rotation = Math.sin(this.pos.y * .04);
+        if (yCollision.bind(this)(points[2]))
+            return;
+        if (yCollision.bind(this)(points[3]))
+            return;
+        if (yCollision.bind(this)(points[0]))
+            return;
+        if (yCollision.bind(this)(points[1]))
+            return;
+        function yCollision(point) {
+            var yVal = this.landscape.yValue(this.pos.x + point.x);
+            if (yVal < this.pos.y + point.y)
+                return false;
+            this.pos.y = yVal - point.y;
+            return this.landed = true;
+        }
     };
-    return TwisterMissile;
-}(__WEBPACK_IMPORTED_MODULE_0__missile__["a" /* Missile */]));
+    Package.prototype.paint = function (_a) {
+        var ctx = _a.ctx, gameTime = _a.gameTime;
+        if (this.collected)
+            return;
+        var center = this.dim.div(new __WEBPACK_IMPORTED_MODULE_0__v2__["a" /* V2 */](2, 2));
+        ctx.save();
+        ctx.translate(this.pos.x, this.pos.y);
+        ctx.rotate(this.rotation);
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(-center.x, -this.hangingDist - center.y, this.dim.x, this.dim.y);
+        ctx.beginPath();
+        ctx.moveTo(-6, 2 - this.hangingDist);
+        ctx.lineTo(-2, 2 - this.hangingDist);
+        ctx.lineTo(-2, 6 - this.hangingDist);
+        ctx.lineTo(2, 6 - this.hangingDist);
+        ctx.lineTo(2, 2 - this.hangingDist);
+        ctx.lineTo(6, 2 - this.hangingDist);
+        ctx.lineTo(6, -2 - this.hangingDist);
+        ctx.lineTo(2, -2 - this.hangingDist);
+        ctx.lineTo(2, -6 - this.hangingDist);
+        ctx.lineTo(-2, -6 - this.hangingDist);
+        ctx.lineTo(-2, -2 - this.hangingDist);
+        ctx.lineTo(-6, -2 - this.hangingDist);
+        ctx.closePath();
+        ctx.fillStyle = 'red';
+        ctx.fill();
+        if (!this.landed) {
+            ctx.beginPath();
+            ctx.moveTo(-8, 0);
+            ctx.lineTo(8, 0);
+            ctx.lineTo(0, -this.hangingDist);
+            ctx.closePath();
+            ctx.stroke();
+        }
+        ctx.restore();
+        if (this.landed) {
+            ctx.beginPath();
+            var points = this.collider.getPoints(this.rotation, new __WEBPACK_IMPORTED_MODULE_0__v2__["a" /* V2 */](0, this.hangingDist));
+            var packageCenter = this.pos.add(points[0].add(points[2]).div(new __WEBPACK_IMPORTED_MODULE_0__v2__["a" /* V2 */](2, 2)));
+            ctx.arc(packageCenter.x, packageCenter.y, this.radius + Math.sin(gameTime * .004) * 2, 0, Math.PI * 2);
+            ctx.closePath();
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = '#ffff00';
+            ctx.stroke();
+        }
+    };
+    return Package;
+}());
 
+var RectCollider = (function () {
+    function RectCollider(dim) {
+        this.dim = dim;
+    }
+    RectCollider.prototype.getPoints = function (rotation, center) {
+        if (center === void 0) { center = new __WEBPACK_IMPORTED_MODULE_0__v2__["a" /* V2 */](0, 0); }
+        return [
+            this.dim.dot(new __WEBPACK_IMPORTED_MODULE_0__v2__["a" /* V2 */](-.5, .5)).rotateAroundPivot(center, rotation),
+            this.dim.dot(new __WEBPACK_IMPORTED_MODULE_0__v2__["a" /* V2 */](.5, .5)).rotateAroundPivot(center, rotation),
+            this.dim.dot(new __WEBPACK_IMPORTED_MODULE_0__v2__["a" /* V2 */](.5, -.5)).rotateAroundPivot(center, rotation),
+            this.dim.dot(new __WEBPACK_IMPORTED_MODULE_0__v2__["a" /* V2 */](-.5, -.5)).rotateAroundPivot(center, rotation),
+        ];
+    };
+    return RectCollider;
+}());
 
 
 /***/ }),
@@ -984,9 +1085,7 @@ var TwisterMissile = (function (_super) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__missiles_spread_missile__ = __webpack_require__("../../../../../src/app/game/missiles/spread-missile.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__missiles_small_missile__ = __webpack_require__("../../../../../src/app/game/missiles/small-missile.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__missiles_tracer_missile__ = __webpack_require__("../../../../../src/app/game/missiles/tracer-missile.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__missiles_twister_missile__ = __webpack_require__("../../../../../src/app/game/missiles/twister-missile.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__missiles_hornet_missile__ = __webpack_require__("../../../../../src/app/game/missiles/hornet-missile.ts");
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__missiles_hornet_missile__ = __webpack_require__("../../../../../src/app/game/missiles/hornet-missile.ts");
 
 
 
@@ -1007,6 +1106,7 @@ var Player = (function () {
         this.health = 100;
         this.bezelRotation = 1;
         this.fuel = 160;
+        this.launched = false;
         this.activeMissileIndex = 0;
         this.missiles = [
             {
@@ -1021,23 +1121,23 @@ var Player = (function () {
             },
             {
                 title: 'Atomic Bomb',
-                count: 4,
+                count: 1,
                 missile: __WEBPACK_IMPORTED_MODULE_1__missiles_large_bomb_missile__["a" /* LargeBombMissile */]
             },
             {
                 title: 'Tracer Rocket',
-                count: 4,
+                count: 1,
                 missile: __WEBPACK_IMPORTED_MODULE_4__missiles_tracer_missile__["a" /* TracerMissile */]
             },
-            {
-                title: 'Twister Missile',
-                count: 4,
-                missile: __WEBPACK_IMPORTED_MODULE_5__missiles_twister_missile__["a" /* TwisterMissile */]
-            },
+            // {
+            //   title: 'Twister Missile',
+            //   count: 4,
+            //   missile: TwisterMissile
+            // },
             {
                 title: 'Hornet Attack',
-                count: 4,
-                missile: __WEBPACK_IMPORTED_MODULE_6__missiles_hornet_missile__["a" /* HornetMissile */]
+                count: 1,
+                missile: __WEBPACK_IMPORTED_MODULE_5__missiles_hornet_missile__["a" /* HornetMissile */]
             }
         ];
         this.height = 4;
@@ -1081,13 +1181,21 @@ var Player = (function () {
     };
     Player.prototype.launch = function () {
         var _this = this;
+        if (this.launched)
+            return;
+        this.launched = true;
+        var missile = this.missiles[this.activeMissileIndex];
+        if (missile.count < 1)
+            return false;
+        missile.count--;
+        this.activeMissileIndex = 0;
         var rotation = this.vehicleRotation + this.bezelRotation;
         var force = this.force * .04;
         var vel = new __WEBPACK_IMPORTED_MODULE_0__v2__["a" /* V2 */](Math.cos(rotation) * force, Math.sin(rotation) * force);
         var verticalVehicleRotation = this.vehicleRotation + Math.PI / 2;
         this.game.audio.play('missileLaunch');
         this.game
-            .launch(new (this.missiles[this.activeMissileIndex].missile)({
+            .launch(new (missile.missile)({
             pos: this.pos
                 .add(new __WEBPACK_IMPORTED_MODULE_0__v2__["a" /* V2 */](Math.cos(verticalVehicleRotation) * this.bezelOffset, Math.sin(verticalVehicleRotation) * this.bezelOffset))
                 .add(new __WEBPACK_IMPORTED_MODULE_0__v2__["a" /* V2 */](Math.cos(rotation) * this.bezelLength, Math.sin(rotation) * this.bezelLength)),
@@ -1255,6 +1363,12 @@ var V2 = (function () {
     };
     V2.prototype.div = function (v2) {
         return new V2(this.x / v2.x, this.y / v2.y);
+    };
+    V2.prototype.rotateAroundPivot = function (v2, phi) {
+        var delta = this.subtract(v2);
+        phi += Math.atan2(delta.y, delta.x);
+        var radius = new V2(0, 0).dist(delta);
+        return new V2(Math.cos(phi) * radius, Math.sin(phi) * radius);
     };
     return V2;
 }());
