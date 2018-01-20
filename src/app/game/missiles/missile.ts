@@ -66,13 +66,17 @@ export class Missile {
   collide(landscape: Landscape): boolean {
     if (this.collided) return true;
     if (landscape.collide(this)) {
-      this.collided = true;
-      this.collisionSubject.next(this.pos);
-      this.done();
-      this.impact = new Impact(this.power);
+      this.explode();
       return true;
     }
     return false;
+  }
+
+  explode() {
+    this.collided = true;
+    this.collisionSubject.next(this.pos);
+    this.done();
+    this.impact = new Impact(this.power);
   }
 
   done(): void {
@@ -87,7 +91,7 @@ export class Missile {
   }
 }
 
-class Impact {
+export class Impact {
   private state = 0;
   constructor(
     private power: number

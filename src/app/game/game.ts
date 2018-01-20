@@ -47,15 +47,15 @@ export class Game {
     this.currentPlayer.launched = false;
     this.playerChangeSubject.next(this.currentPlayer);
 
-    if (this.packages.length === 0 && Math.random() > .8) this.packages.push(new Package(this.landscape));
+    if (/*this.packages.length === 0 &&*/ Math.random() > .5) this.packages.push(new Package(this.landscape));
   }
 
   start(settings: any): void {
     this.startTime = (new Date()).getTime();
     this.adjustSize();
     this.players = [
-      new Player(settings.playerOneName, "#000", 40, this.landscape, this),
-      new Player(settings.playerTwoName, "blue", 400, this.landscape, this)
+      new Player(settings.playerOneName, '#000', 40, this.landscape, this),
+      new Player(settings.playerTwoName, 'blue', 400, this.landscape, this)
     ];
 
     this.switchPlayer();
@@ -72,7 +72,7 @@ export class Game {
     if (this.hasFinished) return;
     this.missiles.forEach(m => m.update(this.landscape));
     this.players.forEach(p => p.update());
-    this.packages.forEach(p => p.update(this.players));
+    this.packages.forEach(p => p.update(this.players, this.missiles));
     setTimeout(this.update.bind(this), 20);
   }
 

@@ -35,6 +35,14 @@ export class V2 {
       const delta = this.subtract(v2);
       phi += Math.atan2(delta.y, delta.x);
       const radius = new V2(0, 0).dist(delta);
-      return new V2(Math.cos(phi) * radius, Math.sin(phi) * radius);
+      return new V2(Math.cos(phi) * radius, Math.sin(phi) * radius).add(v2);
+    }
+
+    equals(v2: V2): boolean {
+      return this.x === v2.x && this.y === v2.y;
+    }
+
+    sign(): V2 {
+      return new V2(Math.sign(this.x), Math.sign(this.y));
     }
 }

@@ -13,7 +13,7 @@ export class Landscape {
   private resolution = 1;
   private hills = 8;
   private minHeight = 60;
-  private maxHeight = 260;
+  private maxHeight = 60;
   private minHillDist = 20;
   private maxHillDist = 120;
   private rndGen: any;
