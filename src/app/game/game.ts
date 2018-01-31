@@ -6,7 +6,6 @@ import { Landscape } from "./landscape";
 import { Missile } from "./missiles/missile";
 import { V2 } from "./v2";
 import { AudioManager } from "./audio-manager";
-import { Package } from './package';
 
 export class Game {
   playerChange: Observable<Player>;
@@ -21,7 +20,7 @@ export class Game {
   private ctx: CanvasRenderingContext2D;
   private landscape: Landscape;
   private missiles: Missile[] = [];
-  private packages: Package[] = [];
+  // private packages: Package[] = [];
   private hasFinished = false;
   private startTime: number;
 
@@ -47,15 +46,15 @@ export class Game {
     this.currentPlayer.launched = false;
     this.playerChangeSubject.next(this.currentPlayer);
 
-    if (/*this.packages.length === 0 &&*/ Math.random() > .5) this.packages.push(new Package(this.landscape));
+    // if (this.packages.length === 0 && Math.random() > .5) this.packages.push(new Package(this.landscape));
   }
 
   start(settings: any): void {
     this.startTime = (new Date()).getTime();
     this.adjustSize();
     this.players = [
-      new Player(settings.playerOneName, '#000', 40, this.landscape, this),
-      new Player(settings.playerTwoName, 'blue', 400, this.landscape, this)
+      new Player(settings.playerOneName, '#fff', 40, this.landscape, this),
+      new Player(settings.playerTwoName, '#ffff00', 400, this.landscape, this)
     ];
 
     this.switchPlayer();
@@ -72,7 +71,7 @@ export class Game {
     if (this.hasFinished) return;
     this.missiles.forEach(m => m.update(this.landscape));
     this.players.forEach(p => p.update());
-    this.packages.forEach(p => p.update(this.players, this.missiles));
+    // this.packages.forEach(p => p.update(this.players, this.missiles));
     setTimeout(this.update.bind(this), 20);
   }
 
@@ -86,7 +85,7 @@ export class Game {
     this.landscape.paint(this.ctx);
     this.missiles.forEach(m => m.paint(this.ctx));
     this.players.forEach(p => p.paint(this.ctx));
-    this.packages.forEach(p => p.paint(conf));
+    // this.packages.forEach(p => p.paint(conf));
     window.requestAnimationFrame(this.paint.bind(this));
   }
 

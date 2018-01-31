@@ -12,12 +12,12 @@ export class Landscape {
   private vertices: number[][];
   private resolution = 1;
   private hills = 8;
-  private minHeight = 60;
-  private maxHeight = 60;
-  private minHillDist = 20;
-  private maxHillDist = 120;
+  private minHeight = 160;
+  private maxHeight = 320;
+  private minHillDist = 60;
+  private maxHillDist = 160;
   private rndGen: any;
-  private biome: Biome = new IceBiome(this);
+  private biome: Biome = new MeadowBiome(this);
 
   constructor(
     private seed: number,
@@ -35,9 +35,9 @@ export class Landscape {
     ctx.beginPath();
     this.vertices.forEach((v, i) => {
       if (i === 0) {
-        ctx.moveTo(v[0], v[1]);
+        ctx.moveTo(v[0], v[1] - v[1] % 2);
       } else {
-        ctx.lineTo(v[0], v[1]);
+        ctx.lineTo(v[0], v[1] - v[1] % 2);
       }
     });
 
@@ -117,7 +117,7 @@ interface Biome {
 }
 
 class MeadowBiome implements Biome {
-  color = '#126212';
+  color = '#001122';
   constructor(
     private landscape: Landscape
   ) { }

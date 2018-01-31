@@ -9,9 +9,13 @@ export class MenuComponent implements OnInit {
   @Output() startGame = new EventEmitter();
   @Input() view: string;
 
+  show = false;
+
   settings: any = {};
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.show = true;
+  }
 }

@@ -1,10 +1,22 @@
-<h1>Arms Race</h1>
+<div class="wrapper" [class.show]="show" fxLayout="column" fxLayoutAlign="center center">
+  <div>
+    <div class="title">
+      <div>
+        <h1>Arms Race</h1>
+        <div class="line"></div>
+      </div>
+    </div>
+    <button mat-button (click)="startGame.emit(settings)">Play</button>
+  </div>
+</div>
+
+<!-- 
 <section *ngIf="view === 'main'" name="fullscreen">
   <div>
-      <div (click)="view = 'singleplayer'" class="btn">Singleplayer</div>
   </div>
   <div>
-      <div (click)="view = 'multiplayer'" class="btn">Multiplayer</div>
+      <button mat-button (click)="view = 'multiplayer'">Multiplayer</button>
+
   </div>
 </section>
 <section *ngIf="view === 'singleplayer'">
@@ -24,6 +36,6 @@
     <input type="text" [(ngModel)]="settings.playerTwoName" placeholder="Player Two Name">
   </div>
   <div>
-    <div (click)="startGame.emit(settings)" class="btn">Start Game</div>
+      <button mat-button (click)="startGame.emit(settings)">Start Game</button>
   </div>
-</section>
+</section> -->

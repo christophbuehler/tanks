@@ -1,3 +1,55 @@
+@import '~@angular/material/theming';
+
+@mixin mat-ripple-theme($theme) {
+  .mat-ripple-element {
+    background-color: rgba(255, 255, 255, .4);
+  }
+}
+
+@mixin mat-button-theme($theme) {
+  .mat-icon-button {
+    background: transparent;
+    color: #fff !important;
+  }
+  .mat-button {
+    background: transparent;
+    color: #fff !important;
+    text-transform: uppercase;
+    letter-spacing: 2pt;
+    width: 220px;
+    font-size: 16pt;
+    line-height: 48px;
+    height: 48px;
+    &:after {
+      transition: all .2s ease;
+      content: ' ';
+      position: absolute;
+      left: 0;
+      top: 0;
+      border: 1px solid rgba(255, 255, 255, .6) !important;
+      width: 100%;
+      height: 100%;
+    }
+    &:hover {
+      &:after {
+        transform: scale(2);
+        border-color: transparent !important;
+      }
+    }
+  }
+}
+
+@include mat-core();
+
+$arms-race-primary: mat-palette($mat-indigo);
+$arms-race-accent: mat-palette($mat-pink, A200, A100, A400);
+
+$arms-race-warn: mat-palette($mat-red);
+
+$arms-race-theme: mat-light-theme($arms-race-primary, $arms-race-accent, $arms-race-warn);
+
+@include angular-material-theme($arms-race-theme);
+
 * {
   user-select: none;
   -o-user-select:none;
@@ -8,12 +60,12 @@
 }
 
 body {
-  background-image: url('assets/bg.png');
-  background-size: cover;
+  background-color: #000;
   margin: 0;
   padding: 0;
-  font-family: 'Buenard', serif;
+  font-family: Roboto, serif;
   -webkit-touch-callout: none;
   -webkit-text-size-adjust: none;
   -webkit-user-select: none;
 }
+
